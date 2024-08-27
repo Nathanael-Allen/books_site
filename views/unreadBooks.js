@@ -1,16 +1,12 @@
-import { returnFinishedBooks } from "../database/database.cjs";
+import { returnUnfinishedBooks } from "../database/database.cjs";
 
-async function createBookList(book, html){
-
-}
-
-async function getFinishedBooks(){
-    const books = await returnFinishedBooks();
+async function getUnfinishedBooks(){
+    const books = await returnUnfinishedBooks();
     let bookDivs = /*html*/`
     `;
 
     let mainList = /*html*/`
-        <h4>Finished Books</h4>
+        <h4>Unread Books</h4>
     `;
 
     books.forEach((book)=>{
@@ -19,8 +15,6 @@ async function getFinishedBooks(){
             <div>
                 <p>Title: ${book['TITLE']}</p>
                 <p>Author: ${book['AUTHOR']}</p>
-                <p>Rating: ${book['RATING'] ? book['RATING'] : ''}</p>
-                <p>Review: ${book['REVIEW'] ? book['REVIEW'] : ''}</p>
             </div>
         </li>
         `;
@@ -36,4 +30,4 @@ async function getFinishedBooks(){
     return mainList
 }
 
-export {getFinishedBooks}
+export {getUnfinishedBooks}

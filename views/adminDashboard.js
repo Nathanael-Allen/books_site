@@ -1,7 +1,4 @@
-import { getFinishedBooks } from "./finishedBooks.js";
-import { getUnfinishedBooks } from "./unreadBooks.js";
-
-async function CreateIndexPage(){
+function createAdminPage(){
     return /*html*/`
     <!DOCTYPE html>
     <html lang="en">
@@ -13,18 +10,15 @@ async function CreateIndexPage(){
         <title>My Book List</title>
     </head>
     <body>
-        <div>
-            <header><h1>My Book List</h1></header>        
-            <div>
-                ${await getFinishedBooks()}
-            </div>
-            <div>
-                ${await getUnfinishedBooks()}
-            </div>
-        </div>
+        <header>
+            <ul>
+                <li><button>Add Book To Read</button></li>
+                <li><button>Add Finished Book</button></li>
+            </ul>
+        </header>
     </body>
     </html>
     `
 }
 
-export {CreateIndexPage}
+export { createAdminPage }

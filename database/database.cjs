@@ -10,12 +10,14 @@ async function insertBook(title, author, rating){
     `
     const  db = await open({filename: 'private/books.db', driver: sqlite3.Database})
     db.run(sql, [title, author, rating])
+    db.close()
 }
 
-async function returnAllBooks(){
+async function returnFinishedBooks(){
     const  db = await open({filename: 'private/books.db', driver: sqlite3.Database})
     let sql = `
     SELECT * FROM BOOKS
+    WHERE FINISHED = 1;
     `;
 
     const books = await db.all(sql)
@@ -23,6 +25,17 @@ async function returnAllBooks(){
     return books
 }
 
-// returnAllBooks().then((books) => books.forEach((book) => console.log(book['TITLE'])))
+async function returnUnfinishedBooks(){
+    const  db = await open({filename: 'private/books.db', driver: sqlite3.Database})
+    let sql = `
+    SELECT TITLE, AUTHOR FROM BOOKS
+    WHERE FINISHED = 0;
+    `;
 
-module.exports = {insertBook, returnAllBooks}
+    const books = await db.all(sql)
+    db.close()
+    return books
+}
+
+
+module.exports = {insertBook, returnFinishedBooks, returnUnfinishedBooks}
