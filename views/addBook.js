@@ -1,6 +1,7 @@
-function addBookToRead(){
+function addUnreadBook(){
     return /*html*/`
-        <form action="/addbooktoread" method="post">
+        <h4>Add Book</h4>
+        <form action="/books/add/unread" method="post">
             <label for="title">Title:</label>
             <input type="text" id="title" name="title">
             <label for="author">Author:</label>
@@ -13,7 +14,7 @@ function addBookToRead(){
 function addFinishedBook(){
     return /*html*/`
         <h4>Add Book</h4>
-        <form action="/addfinishedbook" method="post">
+        <form action="/books/add/finished" method="post">
             <label for="title">Title:</label>
             <input type="text" id="title" name="title">
             <label for="author">Author:</label>
@@ -21,10 +22,10 @@ function addFinishedBook(){
             <label for="rating">Rating:</label>
             <input type="number" id="rating" name="rating" min="0" max="10">
             <label for="review">Review:</label>
-            <input type="text" id="review" name="review">
+            <textarea name="review" id="review" cols="50" rows="4"></textarea>
             <input type="submit" value="Submit">
         </form>
     `
 }
 
-export {addBookToRead, addFinishedBook}
+export {addUnreadBook, addFinishedBook}

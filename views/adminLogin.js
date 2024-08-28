@@ -1,4 +1,4 @@
-function createAdminPage(){
+function createLoginPage(){
     return /*html*/`
     <!DOCTYPE html>
     <html lang="en">
@@ -9,16 +9,17 @@ function createAdminPage(){
         <link rel="stylesheet" href="/styles.css">
         <title>My Book List</title>
     </head>
-    <body id="add-book-body">
-        <header>
-            <ul>
-                <li><button hx-get="/books/add/unread" hx-target="#add-book-body">Add Book To Read</button></li>
-                <li><button hx-get="/books/add/finished" hx-target="#add-book-body">Add Finished Book</button></li>
-            </ul>
-        </header>
+    <body>
+        <form action="/admin/login" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username">
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password">
+            <input type="submit" value="Login">
+        </form>
     </body>
     </html>
     `
 }
 
-export { createAdminPage }
+export { createLoginPage }

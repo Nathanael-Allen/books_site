@@ -3,13 +3,23 @@ const sqlite3 = require('sqlite3').verbose()
 const {open} = require('sqlite')
 
 
-async function insertBook(title, author, rating){
+async function insertUnreadBook(title, author){
     let sql = `
-    INSERT INTO BOOKS(TITLE, AUTHOR, RATING)
-    VALUES(?, ?, ?)
+    INSERT INTO BOOKS(TITLE, AUTHOR, FINISHED)
+    VALUES(?, ?, 0)
     `
     const  db = await open({filename: 'private/books.db', driver: sqlite3.Database})
-    db.run(sql, [title, author, rating])
+    db.run(sql, [title, author])
+    db.close()
+}
+
+async function insertFinishedBook(title, author, rating, review){
+    let sql = `
+    INSERT INTO BOOKS(TITLE, AUTHOR, RATING, REVIEW, FINISHED)
+    VALUES(?, ?, ?, ?, 1)
+    `
+    const  db = await open({filename: 'private/books.db', driver: sqlite3.Database})
+    db.run(sql, [title, author, rating, review])
     db.close()
 }
 
@@ -37,5 +47,25 @@ async function returnUnfinishedBooks(){
     return books
 }
 
+async function validUser(username, pass){
+    const db = await open({filename: 'private/books.db', driver: sqlite3.Database});
+    let sql = `
+    SELECT USERNAME, PASSWORD 
+    FROM USERS 
+    WHERE USERNAME = ? AND PASSWORD = ?;
+    `
 
-module.exports = {insertBook, returnFinishedBooks, returnUnfinishedBooks}
+    const user = db.get(sql, username, pass);
+    db.close();
+    return user;
+}
+
+
+
+
+module.exports = {
+    insertUnreadBook,
+    insertFinishedBook,
+    returnFinishedBooks,
+    returnUnfinishedBooks,
+    validUser}

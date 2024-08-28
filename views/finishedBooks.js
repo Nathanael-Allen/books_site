@@ -1,9 +1,5 @@
 import { returnFinishedBooks } from "../database/database.cjs";
 
-async function createBookList(book, html){
-
-}
-
 async function getFinishedBooks(){
     const books = await returnFinishedBooks();
     let bookDivs = /*html*/`
