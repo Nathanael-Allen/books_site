@@ -592,6 +592,10 @@ video {
   display: grid;
 }
 
+.w-2\/4 {
+  width: 50%;
+}
+
 .w-full {
   width: 100%;
 }
@@ -656,6 +660,10 @@ video {
   padding-bottom: 0.5rem;
 }
 
+.pr-2 {
+  padding-right: 0.5rem;
+}
+
 .pr-4 {
   padding-right: 1rem;
 }
@@ -689,6 +697,11 @@ video {
 
 .font-semibold {
   font-weight: 600;
+}
+
+.text-black {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
 .text-sky-500 {

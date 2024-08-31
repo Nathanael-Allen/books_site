@@ -1,8 +1,7 @@
-import { returnFinishedBooks } from "../database/database.cjs";
+import { searchDB } from "../database/database.cjs";
 
-
-async function getBookList(){
-    const books = await returnFinishedBooks();
+async function searchResults(search){
+    const books = await searchDB(search);
     let bookList = /*html*/``
     books.forEach((book)=>{
         let html = /*html*/`
@@ -21,14 +20,14 @@ async function getBookList(){
     });
 
     return /*html*/`
-    <ul class="max-lg:block ">
+    <ul class="max-lg:block w-full">
         ${bookList}
     </ul> 
     `;
-}
+};
 
-async function getBookDiv(){
-    let bookList = await getBookList();
+async function getSearchList(search){
+    let bookList = await searchResults(search);
 
     let header = /*html*/`
         <h4 class="font-bold text-2xl text-center mt-4">Finished Books</h4>
@@ -48,4 +47,4 @@ async function getBookDiv(){
     return mainDiv
 } 
 
-export {getBookDiv}
+export {getSearchList}

@@ -1,15 +1,16 @@
 import express from 'express'
-import { getFinishedBooks } from '../views/finishedBooks.js'
+import { getBookDiv } from '../views/finishedBooks.js'
 import { addFinishedBook, addUnreadBook } from '../views/addBook.js'
-import { insertFinishedBook, insertUnreadBook } from '../database/database.cjs'
+import { insertFinishedBook, insertUnreadBook, searchDB } from '../database/database.cjs'
 import { getUnfinishedBooks } from '../views/unreadBooks.js'
+import { getSearchList } from '../views/searchBooks.js'
 const router = express.Router()
 
 router.use(express.json())
 router.use(express.urlencoded())
 
 router.get('/finished', async (req, res)=>{
-    res.send(await getFinishedBooks())
+    res.send(await getBookDiv())
 })
 
 router.get('/unread', async (req, res)=>{
@@ -37,5 +38,17 @@ router.post('/add/unread', (req, res)=>{
     res.status(201).send('<p>Book added!</p>');
 })
 
+
+router.post('/search', async (req, res)=>{
+    const usrSearch = req.body["search-bar"].trim();
+    let html;
+    if(!usrSearch){
+        html = await getBookDiv()
+    }
+    else{
+        html = await getSearchList(usrSearch);
+    }
+    res.send(html);
+})
 
 export {router}

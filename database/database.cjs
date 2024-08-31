@@ -61,6 +61,24 @@ async function validUser(username, pass){
 }
 
 
+async function searchDB(search){
+    if(!search){
+        return
+    }
+    const db = await open({filename: 'private/books.db', driver: sqlite3.Database});
+    let sql = `
+        SELECT *
+        FROM BOOKS
+        WHERE TITLE LIKE ? OR AUTHOR LIKE ? AND FINISHED = 1
+        LIMIT 10;
+    `;
+
+    let results = await db.all(sql, `%${search}%`, `%${search}%`);
+    db.close();
+    return results;
+}
+
+
 
 
 module.exports = {
@@ -68,4 +86,6 @@ module.exports = {
     insertFinishedBook,
     returnFinishedBooks,
     returnUnfinishedBooks,
-    validUser}
+    validUser,
+    searchDB
+    }
