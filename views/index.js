@@ -1,6 +1,3 @@
-import { getFinishedBooks } from "./finishedBooks.js";
-import { getUnfinishedBooks } from "./unreadBooks.js";
-
 async function CreateIndexPage(){
     return /*html*/`
     <!DOCTYPE html>

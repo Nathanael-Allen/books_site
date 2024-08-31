@@ -1,10 +1,6 @@
 window.addEventListener('load', (e)=>{
     const navList = document.getElementById('nav-list');
     const menuButton = document.getElementById('menu-button');
-    // console.log(navList.classList.contains('max-sm:hidden'));
-    // console.log(navList.classList.contains('flex'));
-    // console.log(navList.classList.contains('flex-auto'));
-    // console.log(navList.classList);
 
     window.addEventListener('resize', ()=>{
         if(window.innerWidth > 640){
