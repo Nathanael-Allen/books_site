@@ -6,15 +6,15 @@ async function getUnfinishedBooks(){
     `;
 
     let mainList = /*html*/`
-        <h4>Unread Books</h4>
+        <h4 class="font-bold text-lg">Unread Books</h4>
     `;
 
     books.forEach((book)=>{
         let html = /*html*/`
         <li>
-            <div>
-                <p>Title: ${book['TITLE']}</p>
-                <p>Author: ${book['AUTHOR']}</p>
+            <div class="my-2">
+                <p class="font-semibold text-lg">Title: ${book['TITLE']}</p>
+                <p class="font-semibold">Author: ${book['AUTHOR']}</p>
             </div>
         </li>
         `;

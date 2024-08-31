@@ -6,16 +6,16 @@ async function getFinishedBooks(){
     `;
 
     let mainList = /*html*/`
-        <h4>Finished Books</h4>
+        <h4 class="font-bold text-lg">Finished Books</h4>
     `;
 
     books.forEach((book)=>{
         let html = /*html*/`
         <li>
-            <div>
-                <p>Title: ${book['TITLE']}</p>
-                <p>Author: ${book['AUTHOR']}</p>
-                <p>Rating: ${book['RATING'] ? book['RATING'] : ''}</p>
+            <div class="my-2">
+                <p class="font-semibold text-lg">Title: ${book['TITLE']}</p>
+                <p class="font-semibold">Author: ${book['AUTHOR']}</p>
+                <p>Rating: ${book['RATING'] ? book['RATING'] : 'no-rating'}/10</p>
                 <p>Review: ${book['REVIEW'] ? book['REVIEW'] : ''}</p>
             </div>
         </li>

@@ -2,6 +2,7 @@ import express from 'express'
 import { getFinishedBooks } from '../views/finishedBooks.js'
 import { addFinishedBook, addUnreadBook } from '../views/addBook.js'
 import { insertFinishedBook, insertUnreadBook } from '../database/database.cjs'
+import { getUnfinishedBooks } from '../views/unreadBooks.js'
 const router = express.Router()
 
 router.use(express.json())
@@ -12,7 +13,7 @@ router.get('/finished', async (req, res)=>{
 })
 
 router.get('/unread', async (req, res)=>{
-    res.send()
+    res.send(await getUnfinishedBooks())
 })
 
 
@@ -27,13 +28,13 @@ router.get('/add/unread', (req, res)=>{
 router.post('/add/finished', (req, res)=>{
     const book = req.body;
     insertFinishedBook(book.title, book.author, book.rating, book.review);
-    res.status(201).redirect('/admin/dashboard');
+    res.status(201).send('<p>Book added!</p>');
 })
 
 router.post('/add/unread', (req, res)=>{
     const book = req.body;
     insertUnreadBook(book.title, book.author);
-    res.status(201).redirect('/admin/dashboard')
+    res.status(201).send('<p>Book added!</p>');
 })
 
 

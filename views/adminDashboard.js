@@ -12,8 +12,8 @@ function createAdminPage(){
     <body id="add-book-body">
         <header>
             <ul>
-                <li><button hx-get="/books/add/unread" hx-target="#add-book-body">Add Book To Read</button></li>
-                <li><button hx-get="/books/add/finished" hx-target="#add-book-body">Add Finished Book</button></li>
+                <li><button hx-get="/books/add/unread">Add Book To Read</button></li>
+                <li><button hx-get="/books/add/finished">Add Finished Book</button></li>
             </ul>
         </header>
     </body>
