@@ -11,7 +11,7 @@ async function CreateIndexPage(){
         <title>My Book List</title>
     </head>
     <body class="bg-gray-900 text-white">
-        <header class="bg-gray-800 text-white max-sm:m">
+        <header class="bg-gray-800 text-white sticky top-0 max-sm:m">
             <div class="sm:hidden text-right w-full">
                 <button id="menu-button" class="pr-4">
                     <svg width="50px" height="50px" viewBox="0 0 24 24" fill="none">
@@ -21,10 +21,16 @@ async function CreateIndexPage(){
                     </svg>
                 </button>
             </div>
-            <ul id="nav-list" class="max-sm:hidden max-sm:text-center sm:flex sm:flex-auto sm:justify-evenly">
-                <li class="py-2 border-t"><button hx-get="/books/finished" hx-target="#main-div" class="text-xl hover:text-sky-500">Finished Books</button></li>
-                <li class="py-2 border-t"><button hx-get="/books/unread" hx-target="#main-div" class="text-xl hover:text-sky-500">Unread Books</button></li>
-                <li class="py-2 border-t"><button hx-get="/admin/dashboard" hx-target="#main-div" class="text-xl hover:text-sky-500">Admin Dashboard</button></li>
+            <ul id="nav-list" class="max-sm:hidden sm:flex sm:flex-auto max-sm:text-center">
+                <li class="max-sm:border-t">
+                    <button hx-get="/books/reviews" hx-target="#main-div" class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 max-sm:w-full">Reviews</button>
+                </li>
+                <li class="max-sm:border-t">
+                    <button hx-get="/books/readinglist" hx-target="#main-div" class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 max-sm:w-full">Reading List</button>
+                </li>
+                <li class="max-sm:border-t">
+                    <button hx-get="/admin/dashboard" hx-target="#main-div" class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 max-sm:w-full">Admin Dashboard</button>
+                </li>
             </ul>
         </header>   
         <div id="main-div">

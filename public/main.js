@@ -4,7 +4,7 @@ window.addEventListener('load', (e)=>{
 
     window.addEventListener('resize', ()=>{
         if(window.innerWidth > 640){
-            navList.classList.value = 'max-sm:hidden max-sm:text-center sm:flex sm:flex-auto sm:justify-evenly';
+            navList.classList.value = 'max-sm:hidden sm:flex sm:flex-auto max-sm:text-center';
         };
     })
 

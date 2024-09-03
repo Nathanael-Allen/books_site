@@ -1,54 +1,30 @@
-import express from 'express'
-import { getBookDiv } from '../views/finishedBooks.js'
-import { addFinishedBook, addUnreadBook } from '../views/addBook.js'
-import { insertFinishedBook, insertUnreadBook, searchDB } from '../database/database.cjs'
-import { getUnfinishedBooks } from '../views/unreadBooks.js'
-import { getSearchList } from '../views/searchBooks.js'
-const router = express.Router()
+import express from 'express';
+import { allReviews } from '../views/allReviews.js';
+import { searchReviews } from '../views/searchReviews.js';
+import { readingList } from '../views/readingList.js';
+const router = express.Router();
 
-router.use(express.json())
-router.use(express.urlencoded())
+router.use(express.json());
+router.use(express.urlencoded());
 
-router.get('/finished', async (req, res)=>{
-    res.send(await getBookDiv())
+router.all('/readinglist', async (req, res)=>{
+    res.send(await readingList())
 })
 
-router.get('/unread', async (req, res)=>{
-    res.send(await getUnfinishedBooks())
-})
-
-
-router.get('/add/finished', (req, res)=>{
-    res.send(addFinishedBook())
-})
-
-router.get('/add/unread', (req, res)=>{
-    res.send(addUnreadBook())
-})
-
-router.post('/add/finished', (req, res)=>{
-    const book = req.body;
-    insertFinishedBook(book.title, book.author, book.rating, book.review);
-    res.status(201).send('<p>Book added!</p>');
-})
-
-router.post('/add/unread', (req, res)=>{
-    const book = req.body;
-    insertUnreadBook(book.title, book.author);
-    res.status(201).send('<p>Book added!</p>');
-})
-
+router.get('/reviews', async (req, res)=>{ 
+    res.send(await allReviews())
+});
 
 router.post('/search', async (req, res)=>{
     const usrSearch = req.body["search-bar"].trim();
     let html;
     if(!usrSearch){
-        html = await getBookDiv()
+        html = await allReviews()
     }
     else{
-        html = await getSearchList(usrSearch);
+        html = await searchReviews(usrSearch);
     }
     res.send(html);
-})
+});
 
 export {router}
