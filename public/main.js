@@ -1,4 +1,4 @@
-window.addEventListener('load', (e)=>{
+window.addEventListener('load', ()=>{
     const navList = document.getElementById('nav-list');
     const menuButton = document.getElementById('menu-button');
 

@@ -1,6 +1,6 @@
 
-const sqlite3 = require('sqlite3').verbose()
-const {open} = require('sqlite')
+const sqlite3 = require('sqlite3').verbose();
+const {open} = require('sqlite');
 
 async function getAllReviews(){
     const  db = await open({filename: 'private/books.db', driver: sqlite3.Database})
@@ -12,19 +12,31 @@ async function getAllReviews(){
     const books = await db.all(sql)
     db.close()
     return books
-}
+};
 
 async function getReadingList(){
-    const  db = await open({filename: 'private/books.db', driver: sqlite3.Database})
+    const  db = await open({filename: 'private/books.db', driver: sqlite3.Database});
     let sql = `
-    SELECT TITLE, AUTHOR FROM BOOKS
+    SELECT BOOKID, TITLE, AUTHOR FROM BOOKS
     WHERE FINISHED = 0;
     `;
 
     const books = await db.all(sql)
     db.close()
     return books
-}
+};
+
+async function getBook(id){
+    const  db = await open({filename: 'private/books.db', driver: sqlite3.Database});
+    let sql  = `
+        SELECT * FROM BOOKS
+        WHERE BOOKID = ?;
+    `;
+
+    const book = await db.get(sql, id);
+    db.close()
+    return book
+};
 
 async function validUser(username, pass){
     const db = await open({filename: 'private/books.db', driver: sqlite3.Database});
@@ -32,12 +44,11 @@ async function validUser(username, pass){
     SELECT USERNAME, PASSWORD 
     FROM USERS 
     WHERE USERNAME = ? AND PASSWORD = ?;
-    `
-
+    `;
     const user = db.get(sql, username, pass);
     db.close();
     return user;
-}
+};
 
 
 async function searchDB(search){
@@ -55,7 +66,7 @@ async function searchDB(search){
     let results = await db.all(sql, `%${search}%`, `%${search}%`);
     db.close();
     return results;
-}
+};
 
 
 
@@ -64,5 +75,6 @@ module.exports = {
     getAllReviews,
     getReadingList,
     validUser,
-    searchDB
-    }
+    searchDB,
+    getBook
+    };

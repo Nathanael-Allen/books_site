@@ -2,17 +2,23 @@ import express from 'express';
 import { allReviews } from '../views/allReviews.js';
 import { searchReviews } from '../views/searchReviews.js';
 import { readingList } from '../views/readingList.js';
+import { addReview } from '../views/addReview.js';
 const router = express.Router();
 
 router.use(express.json());
 router.use(express.urlencoded());
 
-router.all('/readinglist', async (req, res)=>{
+router.get('/readinglist', async (req, res)=>{
     res.send(await readingList())
 })
 
 router.get('/reviews', async (req, res)=>{ 
     res.send(await allReviews())
+});
+
+router.get('/reviews/add/:bookid', (req, res) => {
+    // const {BOOKID} = req.params
+    res.send(addReview());
 });
 
 router.post('/search', async (req, res)=>{
