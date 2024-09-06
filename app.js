@@ -8,6 +8,8 @@ const port = 3000;
 app.use(express.static('public'))
 app.use(express.json());
 app.use(express.urlencoded());
+
+// session
 app.use(session({
     store: new SQLiteStore({
         table: 'sessions',
@@ -18,16 +20,18 @@ app.use(session({
     secret: 'shhh',
     cookie: { maxAge: 3600, sameSite: 'none', secure: true}
 }))
+
+// view engine
 app.set('view engine', 'ejs');
 
-// Routes
+// routes
 app.use('/books', books);
 
 
 
 app.get('/', async (req, res) =>{
     const books = await getAllReviews()
-    res.render('pages/reviews', {books})
+    res.status(200).render('pages/reviews', {books})
 });
 
 app.get('/destroy', (req, res)=>{

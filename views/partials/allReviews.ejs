@@ -10,7 +10,22 @@
                 <div class="p-4">
                     <p class="font-semibold text-sky-500 text-xl col-start-1 pb-1"><%= book.title %></p>
                     <p class="col-start-1"><%= book.author %></p>
-                    <p class="col-start-1 pt-4"><%= book.rating %>/10</p>
+                    <div class="flex flex-row col-start-1 pt-4">
+                        <% if(book.rating % 2 == 0) { %>
+                            <% for(let i = 0; i < (book.rating / 2); i++) { %>
+                                <%- include('star') %>
+                            <% } %>
+                        <% } else { %>
+                            <% for(let i = 0; i <= ((book.rating - 1) / 2); i++) { %>
+                                <% if(i == (book.rating - 1) / 2 || book.rating == 1) { %>
+                                    <%- include('halfStar') %>
+                                <% } else { %>
+                                    <%- include('star') %>
+                                <% } %>
+                            <% } %>
+                        <% } %>
+
+                    </div>
                 </div>
                 <p class="col-start-2 col-span-2 row-start-1 overflow-scroll p-4"><%= book.review %></p>
             </div>
