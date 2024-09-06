@@ -1,17 +1,27 @@
 import { router as books } from './routes/books.js';
-// import { router as admin } from './routes/admin.js';
+import { SQLiteStore, session } from './middleware/session.cjs';
 import express from 'express';
-import { getAllReviews } from './database/database.cjs';
+import { getAllReviews } from './database/booksdb.cjs';
 const app = express();
 const port = 3000;
 
+app.use(express.static('public'))
 app.use(express.json());
 app.use(express.urlencoded());
+app.use(session({
+    store: new SQLiteStore({
+        table: 'sessions',
+        dir: 'C:/personalprojects/node_projects/new_express_practice/private',
+        createDirIfNotExists: 'false',
+        concurrentDB: 'false',
+    }),
+    secret: 'shhh',
+    cookie: { maxAge: 3600, sameSite: 'none', secure: true}
+}))
 app.set('view engine', 'ejs');
 
 // Routes
 app.use('/books', books);
-// app.use('/admin', admin);
 
 
 
