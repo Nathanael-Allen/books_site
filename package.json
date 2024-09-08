@@ -4,13 +4,14 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "nodemon --env-file=.env app.js",
     "build-css": "tailwindcss -i ./src/input.css -o ./public/styles.css --watch"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "connect-sqlite3": "^0.9.15",
     "ejs": "^3.1.10",
     "express": "^4.19.2",

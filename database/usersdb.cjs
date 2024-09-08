@@ -1,5 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 const {open} = require('sqlite');
+const bcrypt = require('bcrypt');
 
 
 async function getUserReviews(user_id){
@@ -39,8 +40,20 @@ async function getUserLogin(username, pass){
     return user;
 };
 
+async function addUser(username, pass){
+    const hash = bcrypt.hashSync(pass, 10);
+    const db = await open({filename: 'private/books.db', driver: sqlite3.Database});
+    let sql = `
+    INSERT INTO reviews(username, password)
+    VALUES(?, ?)
+    `;
+    db.exec(sql, username, hash);
+    db.close();
+}
+
 export {
     getUserReviews,
     getUserReadingList,
-    getUserLogin
+    getUserLogin,
+    addUser
 }

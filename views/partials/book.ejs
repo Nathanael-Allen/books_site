@@ -1,0 +1,29 @@
+<% if (books) { %>
+    <% books.forEach(book => { %>
+        <% if (book && book.volumeInfo.imageLinks && book.volumeInfo.title && book.volumeInfo.authors) { %>
+            <li>
+                <div class="rounded-lg bg-gray-800 grid grid-cols-3 my-8 p-4 max-sm:block">
+                    <div class="col-start-1 h-52 flex items-center max-sm:justify-center">
+                        <% if (!book.volumeInfo.imageLinks) { %>
+                            <p>Image Not Available</p>
+                        <% } else { %>
+                            <img src="<%= book.volumeInfo.imageLinks.thumbnail %>" alt="">
+                        <% } %>
+                    </div>
+                    <div class="sm:col-start-2 sm:col-span-2 max-sm:border-b max-sm:pb-3 max-sm:flex max-sm:justify-center max-sm:items-center max-sm:text-center max-sm:flex-col">
+                        <% if (book.volumeInfo.title) { %>
+                            <p class="font-semibold text-sky-500 text-xl pb-1"><%= book.volumeInfo.title %></p>
+                        <% } %>
+                        <% if (book.volumeInfo.authors) { %>
+                            <p class=""><%= book.volumeInfo.authors[0] %></p>
+                        <% } %>
+                        <div class="flex max-sm:mx-auto sm:mr-auto mt-4">
+                            <button hx-post="books/reviews/add/form" hx-target="#main-div" hx-vals='js:{"title": "<%= book.volumeInfo.title %>", "author":"<%= book.volumeInfo.authors[0] %>", "imageSrc": "<%= book.volumeInfo.imageLinks.thumbnail %>"}' class="text-white p-2 bg-sky-500 items-center rounded-lg mr-2 hover:bg-sky-800">Add Review</button>
+                            <button hx-post="books/readinglist/add/form" hx-target="#main-div" hx-vals='{"title":"<%= book.volumeInfo.title %>", "author":"<%= book.volumeInfo.authors[0] %>"}' class="text-white p-2 bg-sky-500 items-center rounded-lg hover:bg-sky-800">Add To Reading List</button>
+                        </div>
+                    </div>
+            </li>
+            <% } %>
+            <% }) %>
+<% } %>
+

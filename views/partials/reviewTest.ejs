@@ -1,0 +1,26 @@
+<form class="sm:w-3/4 m-auto bg-gray-800 p-4 flex flex-col items-center justify-center mt-4 rounded-lg">
+    <h4 class="font-semibold text-xl border-b text-center w-11/12 sm:w-2/3 mb-4">Review</h4>
+    <div class="flex flex-col w-11/12 sm:w-2/3 mb-6 mt-2">
+        <input type="hidden" name="image_src" id="image_src" value="">
+        <input readonly value="The Twilight Full Collection" class="bg-gray-300 outline-1 outline-gray-600 cursor-default text-black rounded-lg mx-2 my-2 p-1 focus:outline-none" type="text" name="title", id="title" autocomplete="off">
+        <input readonly value="Stephenie Meyer" class="bg-gray-300 outline-1 outline-gray-600 cursor-default text-black rounded-lg mx-2 my-2 p-1 focus:outline-none" type="text" name="author", id="author" autocomplete="off">
+        <div class="flex flex-row mx-2 my-2">
+            <select placeholder="Rating" name="rating", id="rating" autocomplete="off" class="text-black rounded-lg p-1 w-3/4 focus:outline-none focus:ring focus:ring-sky-500">
+                <option value="0.5">0.5</option>
+                <option value="1">1</option>
+                <option value="1.5">1.5</option>
+                <option value="2">2</option>
+                <option value="2.5">2.5</option>
+                <option value="3">3</option>
+                <option value="3.5">3.5</option>
+                <option value="4">4</option>
+                <option value="4.5">4.5</option>
+                <option value="5">5</option>
+            </select>  
+            <p class="w-1/4 ml-2">/5</p>
+        </div>
+   
+    </div>
+    <textarea placeholder="Review" class="w-11/12 sm:w-2/3 h-20 sm:h-36 align-top resize-none text-black rounded-lg p-1 mt-2 mb-6 focus:outline-none focus:ring focus:ring-sky-500" type="text" name="review", id="review"></textarea>
+    <button hx-post="/books/reviews/add" hx-target="#main-div" class="text-white p-2 flex bg-sky-500 items-center rounded-lg hover:bg-sky-800 max-sm:mt-4">Submit</button>
+</form>

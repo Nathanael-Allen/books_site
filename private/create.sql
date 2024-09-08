@@ -5,6 +5,7 @@ CREATE TABLE reviews(
     rating INTEGER NOT NULL,
     review TEXT,
     user_id INT NOT NULL,
+    image_src TEXT,
     FOREIGN KEY(user_id) REFERENCES users(user_id)
 );
 
