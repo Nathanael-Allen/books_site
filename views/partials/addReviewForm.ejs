@@ -1,7 +1,10 @@
 <form class="sm:w-3/4 m-auto bg-gray-800 p-4 flex flex-col items-center justify-center mt-4 rounded-lg">
     <h4 class="font-semibold text-xl border-b text-center w-11/12 sm:w-2/3 mb-4">Review</h4>
     <div class="flex flex-col w-11/12 sm:w-2/3 mb-6 mt-2">
-        <input type="hidden" name="imageSrc" id="imageSrc" value="<%= book.imageSrc %>">
+        <% if (book.book_id) { %>
+            <input readonly type="hidden" name="book_id" id="book_id" value="<%= book.book_id %>">
+        <% } %>
+        <input readonly type="hidden" name="imageSrc" id="imageSrc" value="<%= book.imageSrc %>">
         <input readonly value="<%= book.title %>" class="bg-gray-300 outline-1 outline-gray-600 cursor-default text-black rounded-lg mx-2 my-2 p-1 focus:outline-none" type="text" name="title", id="title" autocomplete="off">
         <input readonly value="<%= book.author %>" class="bg-gray-300 outline-1 outline-gray-600 cursor-default text-black rounded-lg mx-2 my-2 p-1 focus:outline-none" type="text" name="author", id="author" autocomplete="off">
         <div class="flex flex-row mx-2 my-2">

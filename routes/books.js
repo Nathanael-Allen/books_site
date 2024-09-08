@@ -1,5 +1,5 @@
 import express from 'express';
-import { addReview, getAllReviews, getGoogleBooks, getReadingList } from '../database/booksdb.cjs';
+import { addReview, addToReadingList, getAllReviews, getGoogleBooks, getImageSrc, getReadingList } from '../database/booksdb.cjs';
 const router = express.Router();
 
 router.use(express.json());
@@ -40,7 +40,6 @@ router.post('/googlebooks', async (req, res)=>{
 
 router.post('/reviews/add', (req, res)=>{
     const book = req.body;
-    console.log(book)
     try{
         addReview(book)    
     }
@@ -50,14 +49,19 @@ router.post('/reviews/add', (req, res)=>{
     res.status(200).render('partials/success')
 })
 
-router.post('/reviews/add/form', (req, res)=>{
+router.post('/reviews/add/form', async (req, res)=>{
     const book = req.body;
+    if(book.book_id){
+        const {imageSrc} = await getImageSrc(book.book_id)
+        book.imageSrc = imageSrc;
+    }
     res.status(200).render('partials/addReviewForm', {book});
-    // res.status(200).render('partials/success')
 })
 
-router.post('/readinglist/add/form', (req, res)=>{
-    return
+router.post('/readinglist/add', async (req, res)=>{
+    const book = req.body;
+    await addToReadingList(book);
+    res.status(200).render('partials/checkmark')
 })
 
 export {router}

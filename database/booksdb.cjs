@@ -69,10 +69,42 @@ async function searchReviews(search){
 };
 
 // Reading list functions
+async function getImageSrc(id){
+    try{
+        const  db = await open({filename: 'private/books.db', driver: sqlite3.Database});
+        let sql = `
+        SELECT imageSrc FROM reading_list
+        WHERE book_id = ?;
+        `;
+        let imageSrc = db.get(sql, id);
+        db.close();
+        return imageSrc;
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
+async function addToReadingList(book){
+    try{
+        const  db = await open({filename: 'private/books.db', driver: sqlite3.Database});
+        let sql = `
+        INSERT INTO reading_list(title, author, user_id, imageSrc)
+        VALUES(?, ?, ?, ?);
+        `
+        db.run(sql, book.title, book.author, 1, book.imageSrc);
+        db.close();
+    }
+    catch(err){
+        console.log(err)
+    }
+}
+
 async function getReadingList(){
     const  db = await open({filename: 'private/books.db', driver: sqlite3.Database});
     let sql = `
-    SELECT book_id, title, author, date_added FROM reading_list;
+    SELECT book_id, title, author FROM reading_list
+    ORDER BY book_id DESC;
     `;
 
     const books = await db.all(sql);
@@ -81,13 +113,26 @@ async function getReadingList(){
 };
 
 async function addReview(book){
-    const db = await open({filename: 'private/books.db', driver: sqlite3.Database});
-    let sql = `
-    INSERT INTO reviews(title, author, rating, review, imageSrc, user_id) 
-    VALUES(?, ?, ?, ?, ?, ?);
-    `;
-    db.run(sql, book.title, book.author, book.rating, book.review, book.imageSrc, 1)
-    db.close();
+    try{
+
+        const db = await open({filename: 'private/books.db', driver: sqlite3.Database});
+        let sql = `
+        INSERT INTO reviews(title, author, rating, review, imageSrc, user_id) 
+        VALUES(?, ?, ?, ?, ?, ?);
+        `;
+        await db.run(sql, book.title, book.author, book.rating, book.review, book.imageSrc, 1);
+
+        if(book.book_id){
+            let listSql = `
+            DELETE FROM reading_list WHERE book_id = ?;
+            `
+            db.run(listSql, book.book_id)
+        };
+        db.close();
+    }
+    catch(err){
+        console.log(err)
+    }
 };
 
 module.exports = {
@@ -96,5 +141,7 @@ module.exports = {
     getReadingList,
     searchReviews,
     addReview,
-    getOneBook
+    getOneBook,
+    getImageSrc,
+    addToReadingList
     };

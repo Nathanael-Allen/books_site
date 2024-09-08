@@ -4,7 +4,7 @@
         <div class="bg-gray-800 flex items-center w-full my-4 p-2 rounded-lg max-sm:flex-col" >
             <p class="px-2 font-xl font-bold"><%= book.title %></p>
             <p class="px-2 font-lg"><%= book.author %> </p>
-            <button hx-get="/books/reviews/add" hx-target="#main-div" class="text-white p-2 flex bg-sky-500 items-center rounded-lg hover:bg-sky-800 sm:ml-auto max-sm:mt-4"> 
+            <button hx-post="/books/reviews/add/form" hx-target="#main-div" hx-vals='{"title": "<%= book.title %>", "author": "<%= book.author %>", "book_id": "<%= book.book_id %>"}' class="text-white p-2 flex bg-sky-500 items-center rounded-lg hover:bg-sky-800 sm:ml-auto max-sm:mt-4"> 
                 <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"/>
                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>

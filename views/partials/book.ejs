@@ -19,7 +19,7 @@
                         <% } %>
                         <div class="flex max-sm:mx-auto sm:mr-auto mt-4">
                             <button hx-post="books/reviews/add/form" hx-target="#main-div" hx-vals='js:{"title": "<%= book.volumeInfo.title %>", "author":"<%= book.volumeInfo.authors[0] %>", "imageSrc": "<%= book.volumeInfo.imageLinks.thumbnail %>"}' class="text-white p-2 bg-sky-500 items-center rounded-lg mr-2 hover:bg-sky-800">Add Review</button>
-                            <button hx-post="books/readinglist/add/form" hx-target="#main-div" hx-vals='{"title":"<%= book.volumeInfo.title %>", "author":"<%= book.volumeInfo.authors[0] %>"}' class="text-white p-2 bg-sky-500 items-center rounded-lg hover:bg-sky-800">Add To Reading List</button>
+                            <button hx-post="books/readinglist/add" hx-target="closest div" hx-vals='{"title":"<%= book.volumeInfo.title %>", "author":"<%= book.volumeInfo.authors[0] %>", "imageSrc": "<%= book.volumeInfo.imageLinks.thumbnail %>"}' class="text-white p-2 bg-sky-500 items-center rounded-lg hover:bg-sky-800">Add To Reading List</button>
                         </div>
                     </div>
             </li>
