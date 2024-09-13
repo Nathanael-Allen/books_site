@@ -3,57 +3,88 @@ const {open} = require('sqlite');
 const bcrypt = require('bcrypt');
 
 
-async function getUserReviews(user_id){
+async function getUserReviews(userID){
     const db = await open({filename: 'private/books.db', driver: sqlite3.Database});
     let sql =`
     SELECT * FROM reviews
-    WHERE user_id = ?;
+    WHERE userID = ?;
     `;
 
-    const reviews = db.all(sql, user_id);
+    const reviews = db.all(sql, userID);
     db.close();
     return reviews;
 };
 
-async function getUserReadingList(user_id){
+async function getUserReadingList(userID){
     const db = await open({filename: 'private/books.db', driver: sqlite3.Database});
     let sql =`
     SELECT * FROM reading_list
-    WHERE user_id = ?;
+    WHERE userID = ?;
     `;
 
-    const reading_list = db.all(sql, user_id);
+    const reading_list = db.all(sql, userID);
     db.close();
     return reading_list;
 };
 
 
-async function getUserLogin(username, pass){
-    const db = await open({filename: 'private/books.db', driver: sqlite3.Database});
-    let sql = `
-    SELECT username, password
-    FROM users 
-    WHERE username = ? AND password = ?;
-    `;
-    const user = db.get(sql, username, pass);
-    db.close();
-    return user;
+async function validateUser(username, pass){
+    try{
+        const db = await open({filename: 'private/books.db', driver: sqlite3.Database});
+        let sql = `
+        SELECT userID, username, password
+        FROM users 
+        WHERE username = ?;
+        `;
+        const user = await db.get(sql, username);
+        if(user){
+            let valid = await bcrypt.compare(pass, user.password)
+            if(valid){
+                db.close();
+                return user;
+            }
+            else{
+                db.close();
+                return false;
+            }   
+
+        }
+        else{
+            db.close()
+            return false;
+        }  
+    }
+    catch(err){
+        console.log(err)
+    }
+
 };
 
 async function addUser(username, pass){
-    const hash = bcrypt.hashSync(pass, 10);
-    const db = await open({filename: 'private/books.db', driver: sqlite3.Database});
-    let sql = `
-    INSERT INTO reviews(username, password)
-    VALUES(?, ?)
-    `;
-    db.exec(sql, username, hash);
-    db.close();
+    try{
+        if(username && pass){
+            const hash = bcrypt.hashSync(pass, 10);
+            const db = await open({filename: 'private/books.db', driver: sqlite3.Database});
+            let sql = `
+            INSERT INTO users(username, password)
+            VALUES(?, ?)
+            `;
+            await db.run(sql, username, hash);
+            db.close();
+        }
+        else{
+            return false;
+        }
+    }
+    catch(err){
+        console.log(err)
+    }
+
 }
 
-export {
+module.exports = {
     getUserReviews,
     getUserReadingList,
-    getUserLogin,
+    validateUser,
     addUser
 }

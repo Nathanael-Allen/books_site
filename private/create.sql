@@ -4,22 +4,22 @@ CREATE TABLE reviews(
     author TEXT NOT NULL,
     rating INTEGER NOT NULL,
     review TEXT,
-    user_id INT NOT NULL,
+    userID INT NOT NULL,
     imageSrc TEXT,
-    FOREIGN KEY(user_id) REFERENCES users(user_id)
+    FOREIGN KEY(userID) REFERENCES users(userID)
 );
 
 CREATE TABLE reading_list(
     book_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
     author TEXT NOT NULL,
-    user_id INTEGER NOT NULL,
+    userID INTEGER NOT NULL,
     imageSrc TEXT,
-    FOREIGN KEY(user_id) REFERENCES users(user_id)
+    FOREIGN KEY(userID) REFERENCES users(userID)
 );
 
 CREATE TABLE users(
-    user_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    userID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL,
     password TEXT NOT NULL
 );

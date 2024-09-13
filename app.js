@@ -1,4 +1,5 @@
 import { router as books } from './routes/books.js';
+import { router as login } from './routes/login.js'
 import { SQLiteStore, session } from './middleware/session.cjs';
 import express from 'express';
 import { getAllReviews } from './database/booksdb.cjs';
@@ -7,7 +8,7 @@ const port = 3000;
 
 app.use(express.static('public'))
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true}));
 
 // session
 app.use(session({
@@ -17,8 +18,10 @@ app.use(session({
         createDirIfNotExists: 'false',
         concurrentDB: 'false',
     }),
-    secret: 'shhh',
-    cookie: { maxAge: 3600, sameSite: 'none', secure: true}
+    saveUninitialized: false,
+    resave: true,
+    secret: 'hahaha',
+    cookie: { maxAge: 3600, secure: false}
 }))
 
 // view engine
@@ -26,6 +29,7 @@ app.set('view engine', 'ejs');
 
 // routes
 app.use('/books', books);
+app.use('/login', login)
 
 
 
