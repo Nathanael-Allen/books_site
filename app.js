@@ -22,7 +22,7 @@ app.use(session({
     saveUninitialized: true,
     resave: true,
     secret: 'hahaha',
-    cookie: { maxAge: 90000000, secure: false, sameSite: 'none'}
+    cookie: { maxAge: 90000000, secure: false, sameSite: 'strict'}
 }))
 
 // view engine

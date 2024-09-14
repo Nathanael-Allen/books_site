@@ -39,6 +39,20 @@ async function getAllReviews(){
     return books
 };
 
+async function getUserReviews(userID){
+    const  db = await open({filename: 'private/books.db', driver: sqlite3.Database})
+    let sql = `
+    SELECT * FROM reviews
+    WHERE userID = ?
+    ORDER BY review_id DESC
+    LIMIT 10;
+    `;
+    
+    const books = await db.all(sql, userID)
+    db.close()
+    return books
+}
+
 async function getOneBook(id){
     const  db = await open({filename: 'private/books.db', driver: sqlite3.Database});
     let sql  = `
@@ -84,14 +98,14 @@ async function getImageSrc(id){
     }
 }
 
-async function addToReadingList(book){
+async function addToReadingList(book, userID){
     try{
         const  db = await open({filename: 'private/books.db', driver: sqlite3.Database});
         let sql = `
         INSERT INTO reading_list(title, author, userID, imageSrc)
         VALUES(?, ?, ?, ?);
         `
-        db.run(sql, book.title, book.author, 1, book.imageSrc);
+        db.run(sql, book.title, book.author, userID, book.imageSrc);
         db.close();
     }
     catch(err){
@@ -99,27 +113,28 @@ async function addToReadingList(book){
     }
 }
 
-async function getReadingList(){
+async function getReadingList(userID){
     const  db = await open({filename: 'private/books.db', driver: sqlite3.Database});
     let sql = `
-    SELECT book_id, title, author FROM reading_list
+    SELECT book_id, title, author 
+    FROM reading_list
+    WHERE userID = ?
     ORDER BY book_id DESC;
     `;
 
-    const books = await db.all(sql);
+    const books = await db.all(sql, userID);
     db.close();
     return books
 };
 
-async function addReview(book){
+async function addReview(book, userID){
     try{
-
         const db = await open({filename: 'private/books.db', driver: sqlite3.Database});
         let sql = `
         INSERT INTO reviews(title, author, rating, review, imageSrc, userID) 
         VALUES(?, ?, ?, ?, ?, ?);
         `;
-        await db.run(sql, book.title, book.author, book.rating, book.review, book.imageSrc, 1);
+        await db.run(sql, book.title, book.author, book.rating, book.review, book.imageSrc, userID);
 
         if(book.book_id){
             let listSql = `
@@ -135,6 +150,7 @@ async function addReview(book){
 };
 
 module.exports = {
+    getUserReviews,
     getGoogleBooks,
     getAllReviews,
     getReadingList,

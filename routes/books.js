@@ -1,5 +1,5 @@
 import express from 'express';
-import { addReview, addToReadingList, getAllReviews, getGoogleBooks, getImageSrc, getReadingList } from '../database/booksdb.cjs';
+import { addReview, addToReadingList, getAllReviews, getGoogleBooks, getImageSrc, getReadingList, getUserReviews } from '../database/booksdb.cjs';
 const router = express.Router();
 
 router.use(express.json());
@@ -7,7 +7,8 @@ router.use(express.urlencoded({ extended: true}));
 
 // get requests
 router.get('/readinglist', async (req, res)=>{
-    const books = await getReadingList();
+    const userID = req.session.user.userID;
+    const books = await getReadingList(userID);
     res.render('partials/readingList', {books});
 });
 
@@ -18,6 +19,12 @@ router.get('/reviews', async (req, res)=>{
 
 router.get('/add', async (req, res) => {
     res.render('partials/addBookSearch')
+})
+
+router.get('/userreviews', async (req, res)=>{
+    const userID = req.session.user.userID
+    const books = await getUserReviews(userID)
+    res.render('partials/allReviews', {books})
 })
 
 
@@ -40,13 +47,14 @@ router.post('/googlebooks', async (req, res)=>{
 
 router.post('/reviews/add', (req, res)=>{
     const book = req.body;
+    const userID = req.session.user.userID;
     try{
-        addReview(book)    
+        addReview(book, userID);
     }
     catch(err){
-        console.log(err)
+        console.log(err);
     }
-    res.status(200).render('partials/success')
+    res.status(200).render('partials/success');
 })
 
 router.post('/reviews/add/form', async (req, res)=>{
@@ -60,7 +68,8 @@ router.post('/reviews/add/form', async (req, res)=>{
 
 router.post('/readinglist/add', async (req, res)=>{
     const book = req.body;
-    await addToReadingList(book);
+    const userID = req.session.user.userID;
+    await addToReadingList(book, userID);
     res.status(200).render('partials/checkmark')
 })
 
