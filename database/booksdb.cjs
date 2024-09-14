@@ -88,7 +88,7 @@ async function addToReadingList(book){
     try{
         const  db = await open({filename: 'private/books.db', driver: sqlite3.Database});
         let sql = `
-        INSERT INTO reading_list(title, author, user_id, imageSrc)
+        INSERT INTO reading_list(title, author, userID, imageSrc)
         VALUES(?, ?, ?, ?);
         `
         db.run(sql, book.title, book.author, 1, book.imageSrc);
@@ -116,7 +116,7 @@ async function addReview(book){
 
         const db = await open({filename: 'private/books.db', driver: sqlite3.Database});
         let sql = `
-        INSERT INTO reviews(title, author, rating, review, imageSrc, user_id) 
+        INSERT INTO reviews(title, author, rating, review, imageSrc, userID) 
         VALUES(?, ?, ?, ?, ?, ?);
         `;
         await db.run(sql, book.title, book.author, book.rating, book.review, book.imageSrc, 1);

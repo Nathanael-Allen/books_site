@@ -19,22 +19,40 @@
             add book
         </button>
     </li>
-    <li class="sm:ml-auto max-sm:border-t">
-        <button 
-        hx-get="login"
-        hx-target="#main-div"
-        class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 max-sm:w-full">
-            login
-        </button>
-    </li>
-    <li class="max-sm:border-t">
-        <button
-        hx-get="login/create" 
-        hx-target="#main-div"
-        class="text-l px-4 my-3 hover:text-sky-500 max-sm:w-full">
-            create account
-        </button>
-    </li>
+    <% if (!user) { %>
+        <li class="sm:ml-auto max-sm:border-t">
+            <button 
+            hx-get="login"
+            hx-target="#main-div"
+            class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 max-sm:w-full">
+                login
+            </button>
+        </li>
+        <li class="max-sm:border-t">
+            <button
+            hx-get="login/create" 
+            hx-target="#main-div"
+            class="text-l px-4 my-3 hover:text-sky-500 max-sm:w-full">
+                create account
+            </button>
+        </li>
+    <% } else { %>
+        <li class="sm:ml-auto max-sm:border-t">
+            <p 
+            class="text-l sm:border-r sm:border-white px-4 my-3 max-sm:w-full">
+                Hello <%= user.username %>
+            </p>
+        </li>
+        <li class="max-sm:border-t">
+            <button
+            hx-get="login/logout" 
+            hx-target="body"
+            class="text-l px-4 my-3 hover:text-sky-500 max-sm:w-full">
+                logout
+            </button>
+        </li>
+    <% } %>
+
 
 
 </ul>

@@ -36,9 +36,9 @@ router.post('/valid', async (req, res)=>{
     if(user.username && user.password){
         const validUser = await validateUser(user.username, user.password);
         if(validUser){
-            req.session.userID = {userID: Number(validUser.userID)};
-            console.log(req.session.userID)
-            res.status(200).render('partials/checkmark')
+            req.session.user = {userID: Number(validUser.userID), username: validUser.username};
+            const user = req.session.user;
+            res.status(200).render('partials/successfulLogin', {user})
         }
         else{
             console.log('NO')
@@ -50,6 +50,12 @@ router.post('/valid', async (req, res)=>{
         res.render('partials/invalid')
     }
 
+})
+
+router.get('/logout', (req, res)=>{
+    req.session.destroy()
+    const user = req.session;
+    res.render('partials/successfulLogin', {user})
 })
 
 export {router}

@@ -30,19 +30,13 @@ app.set('view engine', 'ejs');
 
 // routes
 app.use('/books', books);
-app.use('/login', login)
-
-
+app.use('/login', login);
 
 app.get('/', async (req, res) =>{
+    const user = req.session.user
     const books = await getAllReviews();
-    res.status(200).render('pages/reviews', {books})
+    res.status(200).render('pages/reviews', {books, user})
 });
-
-app.get('/destroy', (req, res)=>{
-    req.session.destroy();
-    res.send('Session ended')
-})
 
 app.listen(port, () => {
     console.log(`Server active and listening on ${port}`)

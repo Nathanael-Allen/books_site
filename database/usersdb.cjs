@@ -29,6 +29,7 @@ async function getUserReadingList(userID){
 
 
 async function validateUser(username, pass){
+    const fixedUsername = username.trim().toLowerCase()
     try{
         const db = await open({filename: 'private/books.db', driver: sqlite3.Database});
         let sql = `
@@ -36,7 +37,7 @@ async function validateUser(username, pass){
         FROM users 
         WHERE username = ?;
         `;
-        const user = await db.get(sql, username);
+        const user = await db.get(sql, fixedUsername);
         if(user){
             let valid = await bcrypt.compare(pass, user.password)
             if(valid){
@@ -61,15 +62,16 @@ async function validateUser(username, pass){
 };
 
 async function addUser(username, pass){
+    const fixedUsername = username.trim().toLowerCase()
     try{
-        if(username && pass){
+        if(fixedUsername && pass){
             const hash = bcrypt.hashSync(pass, 10);
             const db = await open({filename: 'private/books.db', driver: sqlite3.Database});
             let sql = `
             INSERT INTO users(username, password)
             VALUES(?, ?)
             `;
-            await db.run(sql, username, hash);
+            await db.run(sql, fixedUsername, hash);
             db.close();
         }
         else{
