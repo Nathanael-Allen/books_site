@@ -24,7 +24,7 @@ router.post('/create', async (req, res)=>{
             console.log(err)
             res.status(500)
         }
-        res.render('partials/checkmark');
+        res.render('partials/success');
     }
     else{
         res.render('invalid')
@@ -36,8 +36,7 @@ router.post('/valid', async (req, res)=>{
     if(user.username && user.password){
         const validUser = await validateUser(user.username, user.password);
         if(validUser){
-            req.session.userID = validUser.userID;
-            req.session.save()
+            req.session.userID = {userID: Number(validUser.userID)};
             console.log(req.session.userID)
             res.status(200).render('partials/checkmark')
         }
@@ -52,7 +51,5 @@ router.post('/valid', async (req, res)=>{
     }
 
 })
-
-
 
 export {router}

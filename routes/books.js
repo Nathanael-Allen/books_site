@@ -7,11 +7,15 @@ router.use(express.urlencoded({ extended: true}));
 
 // get requests
 router.get('/readinglist', async (req, res)=>{
+    console.log(req.session)
+    console.log(req.sessionID)
     const books = await getReadingList();
     res.render('partials/readingList', {books});
 });
 
 router.get('/reviews', async (req, res)=>{ 
+    console.log(req.session)
+    console.log(req.sessionID)
     const books = await getAllReviews();
     res.render('partials/allReviews', {books});
 });

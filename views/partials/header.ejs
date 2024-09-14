@@ -9,27 +9,32 @@
 </div>
 <ul id="nav-list" class="max-sm:hidden sm:flex sm:flex-auto max-sm:text-center">
     <li class="max-sm:border-t">
-        <button hx-get="/books/reviews" hx-target="#main-div" class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 max-sm:w-full">Reviews</button>
+        <button hx-get="/books/reviews" hx-target="#main-div" class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 max-sm:w-full">reviews</button>
     </li>
     <li class="max-sm:border-t">
-        <button hx-get="/books/readinglist" hx-target="#main-div" class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 max-sm:w-full">My Reading List</button>
+        <button hx-get="/books/readinglist" hx-target="#main-div" class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 max-sm:w-full">my reading list</button>
     </li>
     <li class="max-sm:border-t">
-        <button hx-get="/books/add" hx-target="#main-div" class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 max-sm:w-full">Add Book</button>
+        <button hx-get="/books/add" hx-target="#main-div" class="text-l px-4 my-3 hover:text-sky-500 max-sm:w-full">
+            add book
+        </button>
     </li>
-    <li class="max-sm:border-t sm:ml-auto">
+    <li class="sm:ml-auto max-sm:border-t">
         <button 
         hx-get="login"
         hx-target="#main-div"
         class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 max-sm:w-full">
             login
         </button>
+    </li>
+    <li class="max-sm:border-t">
         <button
         hx-get="login/create" 
         hx-target="#main-div"
-        class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 max-sm:w-full">
+        class="text-l px-4 my-3 hover:text-sky-500 max-sm:w-full">
             create account
         </button>
     </li>
+
 
 </ul>

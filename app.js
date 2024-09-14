@@ -6,7 +6,8 @@ import { getAllReviews } from './database/booksdb.cjs';
 const app = express();
 const port = 3000;
 
-app.use(express.static('public'))
+
+app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 
@@ -18,10 +19,10 @@ app.use(session({
         createDirIfNotExists: 'false',
         concurrentDB: 'false',
     }),
-    saveUninitialized: false,
+    saveUninitialized: true,
     resave: true,
     secret: 'hahaha',
-    cookie: { maxAge: 3600, secure: false}
+    cookie: { maxAge: 90000000, secure: false, sameSite: 'none'}
 }))
 
 // view engine
@@ -34,7 +35,7 @@ app.use('/login', login)
 
 
 app.get('/', async (req, res) =>{
-    const books = await getAllReviews()
+    const books = await getAllReviews();
     res.status(200).render('pages/reviews', {books})
 });
 
