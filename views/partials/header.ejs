@@ -1,13 +1,21 @@
-<button 
-class="md:hidden h-full ml-auto flex justify-center items-center"
-_="on click toggle .hidden on #mobile-nav-list"
->
-    <svg width="48px" height="48px" viewBox="0 0 24 24" fill="none">
-        <path d="M20 7L4 7" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
-        <path d="M20 12L4 12" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
-        <path d="M20 17L4 17" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
-    </svg>
-</button>
+<div class="flex items-center">
+    <% if (user) { %>
+        <p 
+        class="md:hidden px-4 text-sky-500">
+            Hello <%= user.username %>
+        </p>
+    <% } %>
+    <button 
+    class="md:hidden px-4 h-full ml-auto flex justify-center items-center"
+    _="on click toggle .hidden on #mobile-nav-list"
+    >
+        <svg width="48px" height="48px" viewBox="0 0 24 24" fill="none">
+            <path d="M20 7L4 7" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M20 12L4 12" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M20 17L4 17" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+    </button>
+</div>
 
 <ul id="mobile-nav-list" class="md:hidden text-center">
     <li class="border-t">
@@ -88,7 +96,7 @@ _="on click toggle .hidden on #mobile-nav-list"
             <button 
             hx-get="login"
             hx-target="#main-div"
-            class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 max-sm:w-full">
+            class="sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 max-sm:w-full">
                 login
             </button>
         </li>
@@ -96,14 +104,14 @@ _="on click toggle .hidden on #mobile-nav-list"
             <button
             hx-get="login/create" 
             hx-target="#main-div"
-            class="text-l px-4 my-3 hover:text-sky-500 max-sm:w-full">
+            class="px-4 my-3 hover:text-sky-500 max-sm:w-full">
                 create account
             </button>
         </li>
     <% } else { %>
         <li class="sm:ml-auto max-sm:border-t">
             <p 
-            class="text-l sm:border-r sm:border-white px-4 my-3 max-sm:w-full">
+            class="sm:border-r sm:border-white px-4 my-3 max-sm:w-full text-sky-500">
                 Hello <%= user.username %>
             </p>
         </li>
@@ -111,7 +119,7 @@ _="on click toggle .hidden on #mobile-nav-list"
             <button
             hx-get="login/logout" 
             hx-target="body"
-            class="text-l px-4 my-3 hover:text-sky-500 max-sm:w-full">
+            class="px-4 my-3 hover:text-sky-500 max-sm:w-full">
                 logout
             </button>
         </li>

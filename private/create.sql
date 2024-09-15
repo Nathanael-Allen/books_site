@@ -24,3 +24,6 @@ CREATE TABLE users(
     password TEXT NOT NULL
 );
 
+SELECT reviews.review_id, reviews.title, reviews.author, reviews.rating, reviews.review, reviews.userID, reviews.imageSrc, users.username
+FROM reviews
+JOIN users ON reviews.userID = users.userID;

@@ -15,16 +15,17 @@ router.get('/create', (req, res)=>{
 })
 
 router.post('/create', async (req, res)=>{
-    const user = req.body
-    if(user.username && user.password){
+    const newUser = req.body
+    if(newUser.username && newUser.password){
         try{
-            await addUser(user.username, user.password);
+            await addUser(newUser.username, newUser.password);
         }
         catch(err){
             console.log(err)
             res.status(500)
         }
-        res.render('partials/success');
+        let message = 'Account created!'
+        res.render('partials/success', {message});
     }
     else{
         res.render('invalid')
@@ -38,10 +39,10 @@ router.post('/valid', async (req, res)=>{
         if(validUser){
             req.session.user = {userID: Number(validUser.userID), username: validUser.username};
             const user = req.session.user;
-            res.status(200).render('partials/successfulLogin', {user})
+            let message = `Welcome ${user.username}!`
+            res.status(200).render('partials/successfulLogin', {user, message})
         }
         else{
-            console.log('NO')
             res.render('partials/invalid')
         }
     }
@@ -55,7 +56,8 @@ router.post('/valid', async (req, res)=>{
 router.get('/logout', (req, res)=>{
     req.session.destroy()
     const user = req.session;
-    res.render('partials/successfulLogin', {user})
+    let message = 'Logged out!'
+    res.render('partials/successfulLogin', {user, message})
 })
 
 export {router}

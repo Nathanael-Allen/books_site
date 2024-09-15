@@ -9,6 +9,8 @@ async function getGoogleBook(bookTitle){
 
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
+        headers.append("Accept-Encoding", "gzip");
+        headers.append("User-Agent", "my program (gzip)");
         const response = await fetch(baseURL.href, {
             method: 'GET',
             headers: headers,

@@ -2,5 +2,7 @@
     <%- include('../partials/header', {user}) %>
 </header>   
 <div id="main-div">
-    <%- include('../partials/success') %>
+    <% if (message) { %>
+        <%- include('../partials/success', {message}) %>
+    <% } %>
 </div>

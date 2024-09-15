@@ -29,7 +29,9 @@ async function getGoogleBooks(bookTitle){
 async function getAllReviews(){
     const  db = await open({filename: 'private/books.db', driver: sqlite3.Database})
     let sql = `
-    SELECT * FROM reviews
+    SELECT reviews.review_id, reviews.title, reviews.author, reviews.rating, reviews.review, reviews.userID, reviews.imageSrc, users.username
+    FROM reviews
+    JOIN users ON reviews.userID = users.userID
     ORDER BY review_id DESC
     LIMIT 10;
     `;
@@ -149,7 +151,37 @@ async function addReview(book, userID){
     }
 };
 
+async function deleteReview(reviewID){
+    try{
+        const  db = await open({filename: 'private/books.db', driver: sqlite3.Database});
+        let sql = `
+        DELETE FROM reviews WHERE review_id = ?;
+        `
+        await db.run(sql, reviewID);
+        db.close();
+    }
+    catch(err){
+        console.log(err)
+    }
+}
+
+async function deleteFromReadingList(bookID){
+    try{
+        const  db = await open({filename: 'private/books.db', driver: sqlite3.Database});
+        let sql = `
+        DELETE FROM reading_list WHERE book_id = ?;
+        `
+        await db.run(sql, bookID);
+        db.close();
+    }
+    catch(err){
+        console.log(err)
+    }
+}
+
 module.exports = {
+    deleteFromReadingList,
+    deleteReview,
     getUserReviews,
     getGoogleBooks,
     getAllReviews,

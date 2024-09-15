@@ -1,15 +1,22 @@
 <div class="flex flex-col md:w-3/4 lg:w-2/4 justify-center items-center md:m-auto">
-    <h4 class="font-bold text-2xl py-2 border-b w-full text-center">All Reviews</h4>
+    <h4 class="font-bold text-2xl py-2 border-b w-full text-center">My Reviews</h4>
     <div class="flex w-full justify-center items-center pt-4">
-        <input class="w-3/4 text-black rounded-lg p-1 focus:outline-none focus:ring focus:ring-sky-500" id="searchBar" placeholder="Search..." type="search" name="searchBar" hx-post="/books/search" hx-trigger="input changed delay:250ms" hx-target="#main-div" hx-preserve="true" autocomplete="off" autofocus>
+        <input class="w-3/4 text-black rounded-lg p-1 focus:outline-none focus:ring focus:ring-sky-500" id="search-bar" placeholder="Search..." type="search" name="search-bar" hx-post="/books/search" hx-trigger="input changed delay:500ms" hx-target="#main-div" hx-preserve="true" autocomplete="off" autofocus>
     </div>
     <% if (books.length <= 0) { %>
-        <p class="mt-4">no reviews found...</p>
+        <p class="mt-4">no reviews yet...</p>
     <% } %>
     <ul class="w-full">
         <% books.forEach(book => { %>
         <li>
-            <div class="rounded-lg bg-gray-800 grid grid-cols-3 my-8 p-4 max-sm:block">
+            <div class="relative rounded-lg bg-gray-800 grid grid-cols-3 my-8 p-4 max-sm:block">
+                <button hx-delete="/books/reviews/delete/<%= book.review_id %>" hx-confirm="Delete review?" hx-target="#main-div" class="absolute top-2 right-2 opacity-35 hover:opacity-100 transition-all">
+                    <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none">
+                        <g stroke-width="0"/>
+                        <g stroke-linecap="round" stroke-linejoin="round"/>
+                        <g> <path d="M10 12L14 16M14 12L10 16M18 6L17.1991 18.0129C17.129 19.065 17.0939 19.5911 16.8667 19.99C16.6666 20.3412 16.3648 20.6235 16.0011 20.7998C15.588 21 15.0607 21 14.0062 21H9.99377C8.93927 21 8.41202 21 7.99889 20.7998C7.63517 20.6235 7.33339 20.3412 7.13332 19.99C6.90607 19.5911 6.871 19.065 6.80086 18.0129L6 6M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6" stroke="#c60000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </g>
+                    </svg>
+                </button>
                 <div class="col-start-1 h-48 flex items-center max-sm:justify-center">
                     <% if (book.imageSrc == '') { %>
                         <p>Image Not Available</p>

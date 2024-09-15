@@ -4,7 +4,7 @@ import { SQLiteStore, session } from './middleware/session.cjs';
 import express from 'express';
 import { getAllReviews } from './database/booksdb.cjs';
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
 
 
 app.use(express.static('public'));
@@ -21,7 +21,7 @@ app.use(session({
     }),
     saveUninitialized: true,
     resave: true,
-    secret: 'hahaha',
+    secret: process.env.SESSION_SECRET,
     cookie: { maxAge: 90000000, secure: false, sameSite: 'strict'}
 }))
 

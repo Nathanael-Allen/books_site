@@ -1,5 +1,5 @@
 import express from 'express';
-import { addReview, addToReadingList, getAllReviews, getGoogleBooks, getImageSrc, getReadingList, getUserReviews } from '../database/booksdb.cjs';
+import { addReview, addToReadingList, deleteFromReadingList, deleteReview, getAllReviews, getGoogleBooks, getImageSrc, getReadingList, getUserReviews, searchReviews } from '../database/booksdb.cjs';
 const router = express.Router();
 
 router.use(express.json());
@@ -24,7 +24,7 @@ router.get('/add', async (req, res) => {
 router.get('/userreviews', async (req, res)=>{
     const userID = req.session.user.userID
     const books = await getUserReviews(userID)
-    res.render('partials/allReviews', {books})
+    res.render('partials/userReviews', {books})
 })
 
 
@@ -32,7 +32,7 @@ router.get('/userreviews', async (req, res)=>{
 router.post('/googlebooks', async (req, res)=>{
     try{
         const search = req.body.searchBar;
-        if(search.trim() == ''){
+        if(!search || !search.trim()){
             res.status(200).send('')
         }
         else{
@@ -71,6 +71,40 @@ router.post('/readinglist/add', async (req, res)=>{
     const userID = req.session.user.userID;
     await addToReadingList(book, userID);
     res.status(200).render('partials/checkmark')
+})
+
+
+// delete requests
+router.delete('/readinglist/delete/:bookID', async (req, res)=>{
+    const bookID = req.params.bookID;
+    const userID = req.session.user.userID;
+    await deleteFromReadingList(bookID)
+    const books = await getReadingList(userID);
+    res.status(200).render('partials/readingList', {books});
+
+
+})
+
+router.delete('/reviews/delete/:reviewID', async (req, res)=>{
+    const reviewID = req.params.reviewID;
+    const userID = req.session.user.userID;
+    await deleteReview(reviewID);
+    const books = await getUserReviews(userID)
+    res.status(200).render('partials/userReviews', {books})
+
+})
+
+// search
+router.post('/search', async (req, res)=>{
+    const search = req.body.searchBar;
+    if(search){
+        let books = await searchReviews(search);
+        res.render('partials/allReviews', {books});
+    }
+    else{
+        let books = await getAllReviews();
+        res.render('partials/allReviews', {books});
+    }
 })
 
 export {router}
