@@ -1,5 +1,5 @@
 import express from 'express';
-import { addReview, addToReadingList, deleteFromReadingList, deleteReview, getAllReviews, getGoogleBooks, getImageSrc, getReadingList, getUserReviews, searchReviews } from '../database/booksdb.cjs';
+import { addReview, addToReadingList, deleteFromReadingList, deleteReview, getAllReviews, getGoogleBooks, getImageSrc, getNextReviews, getNextUserReviews, getReadingList, getTotalReviewPages, getTotalUserReviews, getUserReviews, searchReviews } from '../database/booksdb.cjs';
 const router = express.Router();
 
 router.use(express.json());
@@ -14,7 +14,9 @@ router.get('/readinglist', async (req, res)=>{
 
 router.get('/reviews', async (req, res)=>{ 
     const books = await getAllReviews();
-    res.render('partials/allReviews', {books});
+    const totalPages = await getTotalReviewPages()
+    const page = {number: 1, total: totalPages}
+    res.render('partials/allReviews', {books, page});
 });
 
 router.get('/add', async (req, res) => {
@@ -24,7 +26,9 @@ router.get('/add', async (req, res) => {
 router.get('/userreviews', async (req, res)=>{
     const userID = req.session.user.userID
     const books = await getUserReviews(userID)
-    res.render('partials/userReviews', {books})
+    const totalPages = await getTotalUserReviews(userID)
+    const page = {number: 1, total: totalPages}
+    res.render('partials/userReviews', {books, page})
 })
 
 
@@ -54,7 +58,8 @@ router.post('/reviews/add', (req, res)=>{
     catch(err){
         console.log(err);
     }
-    res.status(200).render('partials/success');
+    let message = 'Review added!'
+    res.status(200).render('partials/success', {message});
 })
 
 router.post('/reviews/add/form', async (req, res)=>{
@@ -97,14 +102,35 @@ router.delete('/reviews/delete/:reviewID', async (req, res)=>{
 // search
 router.post('/search', async (req, res)=>{
     const search = req.body.searchBar;
+    let page = {page: 1, total: 1};
     if(search){
         let books = await searchReviews(search);
-        res.render('partials/allReviews', {books});
+        res.render('partials/allReviews', {books, page});
     }
     else{
         let books = await getAllReviews();
-        res.render('partials/allReviews', {books});
+        res.render('partials/allReviews', {books, page});
     }
+})
+
+router.get('/reviews/:page', async (req, res)=>{
+    let {page: pagenum} = req.params;
+    pagenum = Number(pagenum)
+    const books = await getNextReviews(pagenum);
+    const totalPages = await getTotalReviewPages();
+    const page = {number: pagenum, total: totalPages}
+    res.render('partials/allReviews', {books, page})
+})
+
+router.get('/userreviews/:page', async (req, res)=>{
+    let {page: pagenum} = req.params;
+    pagenum = Number(pagenum)
+    console.log(`you requested page: ${pagenum}`)
+    const userID = req.session.user.userID
+    const books = await getNextUserReviews(pagenum, userID);
+    const totalPages = await getTotalUserReviews(userID);
+    const page = {number: pagenum, total: totalPages}
+    res.render('partials/userReviews', {books, page})
 })
 
 export {router}

@@ -179,7 +179,94 @@ async function deleteFromReadingList(bookID){
     }
 }
 
+async function getTotalReviewPages(){
+    try{
+        const  db = await open({filename: 'private/books.db', driver: sqlite3.Database});
+        let sql = `
+        SELECT COUNT(DISTINCT review_id) AS count FROM reviews;
+        `;
+        const {count} = await db.get(sql);
+        db.close();
+        if(count > 10){
+            let leftover = (count % 10) == 0 ? 0 : 1;
+            let pages = Math.floor(count / 10);
+            let totalPages = leftover + pages;
+            return totalPages;
+        }
+        else{
+            return 1;
+        }
+        
+    }
+    catch(err){
+        console.log(err)
+    }
+};
+
+async function getTotalUserReviews(userID){
+    try{
+        const  db = await open({filename: 'private/books.db', driver: sqlite3.Database});
+        let sql = `
+        SELECT COUNT(DISTINCT review_id) AS count FROM reviews WHERE userID = ?;
+        `;
+        const {count} = await db.get(sql, userID);
+        db.close();
+        if(count > 10){
+            let leftover = (count % 10) == 0 ? 0 : 1;
+            let pages = Math.floor(count / 10);
+            let totalPages = leftover + pages;
+            return totalPages;
+        }
+        else{
+            return 1;
+        }
+        
+    }
+    catch(err){
+        console.log(err)
+    }
+};
+
+async function getNextReviews(pageNumber){
+    let offset = (Number(pageNumber) - 1) * 10;
+    let sql;
+    let books;
+    const  db = await open({filename: 'private/books.db', driver: sqlite3.Database})
+    sql = `
+    SELECT reviews.review_id, reviews.title, reviews.author, reviews.rating, reviews.review, reviews.userID, reviews.imageSrc, users.username
+    FROM reviews
+    JOIN users ON reviews.userID = users.userID
+    ORDER BY review_id DESC
+    LIMIT 10 OFFSET ?;
+    `;
+    books = await db.all(sql, offset)
+    
+    db.close()
+    return books
+};
+
+async function getNextUserReviews(pageNumber, userID){
+    let offset = (Number(pageNumber) - 1) * 10;
+    let sql;
+    let books;
+    const  db = await open({filename: 'private/books.db', driver: sqlite3.Database})
+    sql = `
+        SELECT *
+        FROM reviews
+        WHERE userID = ?
+        ORDER BY review_id DESC
+        LIMIT 10 OFFSET ?;
+    `;
+    books = await db.all(sql, userID, offset)
+    db.close()
+    return books
+}
+
 module.exports = {
+    getTotalUserReviews,
+    getNextUserReviews,
+    getTotalReviewPages,
+    getNextReviews,
     deleteFromReadingList,
     deleteReview,
     getUserReviews,

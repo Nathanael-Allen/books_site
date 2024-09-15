@@ -2,7 +2,7 @@ import { router as books } from './routes/books.js';
 import { router as login } from './routes/login.js'
 import { SQLiteStore, session } from './middleware/session.cjs';
 import express from 'express';
-import { getAllReviews } from './database/booksdb.cjs';
+import { getAllReviews, getTotalReviewPages } from './database/booksdb.cjs';
 const app = express();
 const port = process.env.PORT;
 
@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true}));
 app.use(session({
     store: new SQLiteStore({
         table: 'sessions',
-        dir: 'C:/personalprojects/node_projects/new_express_practice/private',
+        dir: 'private',
         createDirIfNotExists: 'false',
         concurrentDB: 'false',
     }),
@@ -35,7 +35,10 @@ app.use('/login', login);
 app.get('/', async (req, res) =>{
     const user = req.session.user
     const books = await getAllReviews();
-    res.status(200).render('pages/reviews', {books, user})
+    const totalPages = await getTotalReviewPages()
+    const page = {number: 1, total: totalPages}
+
+    res.status(200).render('pages/reviews', {books, user, page})
 });
 
 app.listen(port, () => {

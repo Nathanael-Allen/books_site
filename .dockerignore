@@ -1,0 +1,7 @@
+node_modules
+tailwind.config.js
+src
+docs
+assets
+private/create.sql
+private/insert_books.sql
