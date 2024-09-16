@@ -86,8 +86,6 @@ router.delete('/readinglist/delete/:bookID', async (req, res)=>{
     await deleteFromReadingList(bookID)
     const books = await getReadingList(userID);
     res.status(200).render('partials/readingList', {books});
-
-
 })
 
 router.delete('/reviews/delete/:reviewID', async (req, res)=>{
@@ -95,7 +93,9 @@ router.delete('/reviews/delete/:reviewID', async (req, res)=>{
     const userID = req.session.user.userID;
     await deleteReview(reviewID);
     const books = await getUserReviews(userID)
-    res.status(200).render('partials/userReviews', {books})
+    const totalPages = getTotalUserReviews(userID)
+    const page = {number: 1, total: totalPages}
+    res.status(200).render('partials/userReviews', {books, page})
 
 })
 
