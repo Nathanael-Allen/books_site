@@ -4,10 +4,10 @@ import { router as user } from "./routes/user.js";
 import { router as readingList } from "./routes/readingList.js"
 import { SQLiteStore, session } from "./middleware/session.cjs";
 import express from "express";
-import { getAllReviews, getTotalReviewPages } from "./database/booksdb.cjs";
 const app = express();
 const port = process.env.PORT;
 
+// Middleware
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -17,7 +17,7 @@ app.use(
   session({
     store: new SQLiteStore({
       table: "sessions",
-      dir: "private",
+      dir: process.env.SESSION_DB,
       createDirIfNotExists: "false",
       concurrentDB: "false",
     }),

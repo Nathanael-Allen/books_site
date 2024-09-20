@@ -1,6 +1,12 @@
 FROM node:20-alpine 
 
+RUN apt install && apt upgrade
+
+RUN useradd userguy
+
 WORKDIR /app
+
+USER userguy
 
 COPY . .
 

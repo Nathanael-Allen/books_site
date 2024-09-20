@@ -1,5 +1,6 @@
 const sqlite3 = require("sqlite3").verbose();
 const { open } = require("sqlite");
+const dbPath = process.env.DB_PATH;
 
 async function getGoogleBooks(bookTitle) {
   try {
@@ -30,7 +31,7 @@ async function getGoogleBooks(bookTitle) {
 // Reviews functions
 async function getAllReviews() {
   const db = await open({
-    filename: "private/books.db",
+    filename: dbPath,
     driver: sqlite3.Database,
   });
   let sql = `
@@ -48,7 +49,7 @@ async function getAllReviews() {
 
 async function getUserReviews(userID) {
   const db = await open({
-    filename: "private/books.db",
+    filename: dbPath,
     driver: sqlite3.Database,
   });
   let sql = `
@@ -65,7 +66,7 @@ async function getUserReviews(userID) {
 
 async function getOneBook(id) {
   const db = await open({
-    filename: "private/books.db",
+    filename: dbPath,
     driver: sqlite3.Database,
   });
   let sql = `
@@ -83,7 +84,7 @@ async function searchReviews(search) {
     return;
   }
   const db = await open({
-    filename: "private/books.db",
+    filename: dbPath,
     driver: sqlite3.Database,
   });
   let sql = `
@@ -112,7 +113,7 @@ async function searchReviews(search) {
 async function getImageSrc(id) {
   try {
     const db = await open({
-      filename: "private/books.db",
+      filename: dbPath,
       driver: sqlite3.Database,
     });
     let sql = `
@@ -130,7 +131,7 @@ async function getImageSrc(id) {
 async function addToReadingList(book, userID) {
   try {
     const db = await open({
-      filename: "private/books.db",
+      filename: dbPath,
       driver: sqlite3.Database,
     });
     let sql = `
@@ -146,7 +147,7 @@ async function addToReadingList(book, userID) {
 
 async function getReadingList(userID) {
   const db = await open({
-    filename: "private/books.db",
+    filename: dbPath,
     driver: sqlite3.Database,
   });
   let sql = `
@@ -164,7 +165,7 @@ async function getReadingList(userID) {
 async function addReview(book, userID) {
   try {
     const db = await open({
-      filename: "private/books.db",
+      filename: dbPath,
       driver: sqlite3.Database,
     });
     let sql = `
@@ -196,7 +197,7 @@ async function addReview(book, userID) {
 async function deleteReview(reviewID) {
   try {
     const db = await open({
-      filename: "private/books.db",
+      filename: dbPath,
       driver: sqlite3.Database,
     });
     let sql = `
@@ -212,7 +213,7 @@ async function deleteReview(reviewID) {
 async function deleteFromReadingList(bookID) {
   try {
     const db = await open({
-      filename: "private/books.db",
+      filename: dbPath,
       driver: sqlite3.Database,
     });
     let sql = `
@@ -228,7 +229,7 @@ async function deleteFromReadingList(bookID) {
 async function getTotalReviewPages() {
   try {
     const db = await open({
-      filename: "private/books.db",
+      filename: dbPath,
       driver: sqlite3.Database,
     });
     let sql = `
@@ -252,7 +253,7 @@ async function getTotalReviewPages() {
 async function getTotalUserReviews(userID) {
   try {
     const db = await open({
-      filename: "private/books.db",
+      filename: dbPath,
       driver: sqlite3.Database,
     });
     let sql = `
@@ -278,7 +279,7 @@ async function getNextReviews(pageNumber) {
   let sql;
   let books;
   const db = await open({
-    filename: "private/books.db",
+    filename: dbPath,
     driver: sqlite3.Database,
   });
   sql = `
@@ -299,7 +300,7 @@ async function getNextUserReviews(pageNumber, userID) {
   let sql;
   let books;
   const db = await open({
-    filename: "private/books.db",
+    filename: dbPath,
     driver: sqlite3.Database,
   });
   sql = `

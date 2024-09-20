@@ -85,13 +85,11 @@
   </li>
   <% } else { %>
   <li class="flex items-center border-t">
-    <a
-      _="on click toggle .hidden on #mobile-nav-list"
-      href="/user/logout"
-      class="text-l px-4 my-3 hover:text-sky-500 w-full"
-    >
-      logout
-    </a>
+    <li class="flex items-center max-sm:border-t">
+      <button _="on click toggle .hidden on #mobile-nav-list" hx-post="/user/logout" class="px-4 my-3 hover:text-sky-500 max-sm:w-full">
+        logout
+      </button>
+    </li>
   </li>
   <% } %>
 </ul>
@@ -146,9 +144,9 @@
     </p>
   </li>
   <li class="flex items-center max-sm:border-t">
-    <a href="/user/logout" class="px-4 my-3 hover:text-sky-500 max-sm:w-full">
+    <button hx-post="/user/logout" class="px-4 my-3 hover:text-sky-500 max-sm:w-full">
       logout
-    </a>
+    </button>
   </li>
   <% } %>
 </ul>

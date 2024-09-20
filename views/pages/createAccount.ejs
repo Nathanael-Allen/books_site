@@ -1,38 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <%- include('../partials/head'); %>
-</head>
-<body class="bg-gray-900 text-white">
-    <header class="bg-gray-700 bg-opacity-25 hover:bg-opacity-100 text-white sticky top-0 max-sm:m transition-all z-10">
-        <%- include('../partials/header', {user}) %>
-    </header>   
+  </head>
+  <body class="bg-gray-900 text-white">
+    <header
+      class="bg-gray-700 bg-opacity-25 hover:bg-opacity-100 text-white sticky top-0 max-sm:m transition-all z-10"
+    >
+      <%- include('../partials/header', {user}) %>
+    </header>
     <main>
-        <div 
-        class="sm:w-2/3 min-h-2/3 rounded-md m-auto bg-gray-800">
-            <form class="m-auto flex flex-col justify-center items-center w-full sm:w-2/3 p-4">
-                <h4 class="text-xl m-1 font-semibold text-center">create account</h4>
-                <input
-                    type="text"
-                    class=" w-3/4 text-black rounded-lg p-1 m-3 focus:outline-none focus:ring focus:ring-sky-500" 
-                    placeholder="username"
-                    name="username"
-                    id="usernameInput">
-                <input
-                    type="password"
-                    class=" w-3/4 text-black rounded-lg p-1 m-3 focus:outline-none focus:ring focus:ring-sky-500"
-                    placeholder="password"
-                    name="password"
-                    id="passwordInput">
-                <div id="createAccountErrorMsg"></div>
-                <button
-                    hx-post="login/create"
-                    hx-target="#main-div"
-                    class="text-white py-2 px-6 flex bg-sky-500 items-center rounded-lg hover:bg-sky-800 max-sm:mt-4">
-                        create account
-                </button>
-    </form>
-</div>
+      <div class="sm:w-2/3 min-h-2/3 rounded-md m-auto bg-gray-800">
+        <form
+          class="m-auto flex flex-col justify-center items-center w-full sm:w-2/3 p-4"
+        >
+          <h4 class="text-xl m-1 font-semibold text-center">create account</h4>
+          <input
+            type="text"
+            class="w-3/4 text-black rounded-lg p-1 m-3 focus:outline-none focus:ring focus:ring-sky-500"
+            placeholder="username"
+            name="username"
+            id="usernameInput"
+          />
+          <input
+            type="password"
+            class="w-3/4 text-black rounded-lg p-1 m-3 focus:outline-none focus:ring focus:ring-sky-500"
+            placeholder="password"
+            name="password"
+            id="passwordInput"
+          />
+          <div id="errorMsg"></div>
+          <button
+            hx-post="/user/create"
+            hx-target="#errorMsg"
+            class="text-white py-2 px-6 flex bg-sky-500 items-center rounded-lg hover:bg-sky-800 max-sm:mt-4"
+          >
+            create account
+          </button>
+        </form>
+      </div>
     </main>
-</body>
+  </body>
 </html>

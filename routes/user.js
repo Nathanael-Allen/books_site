@@ -2,7 +2,7 @@ import express from "express";
 import { isLoggedIn } from "../middleware/isLoggedIn.js";
 import { validUsername } from "../middleware/validUsername.js";
 import pkg from "../database/usersdb.cjs";
-const { validateUser, addUser } = pkg;
+const { validateUser, addUser, checkUsername } = pkg;
 const router = express.Router();
 
 router.use(express.json());
@@ -10,6 +10,7 @@ router.use(express.urlencoded({ extended: true }));
 
 router.post("/login", async (req, res) => {
   const user = req.body;
+  let errorMessage;
   if (user.username && user.password) {
     const validUser = await validateUser(user.username, user.password);
     if (validUser) {
@@ -19,13 +20,15 @@ router.post("/login", async (req, res) => {
       };
       const user = req.session.user;
       let message = `Welcome ${user.username}!`;
+      res.setHeader("HX-Redirect", "/reviews");
       res.status(200).render("partials/successfulLogin", { user, message });
     } else {
-      res.render("partials/invalid");
+      errorMessage = "Invalid credentials...";
+      res.render("partials/errorMessage", { errorMessage });
     }
   } else {
-    console.log("no data in form");
-    res.render("partials/invalid");
+    errorMessage = "Blank fields not allowed...";
+    res.render("partials/errorMessage", { errorMessage });
   }
 });
 
@@ -33,16 +36,23 @@ router.get("/login", (req, res) => {
   res.render("pages/login", { user: undefined });
 });
 
-router.get("/create", (req, res) => {
-  res.render("pages/createAccount");
+router.get("/create", isLoggedIn, (req, res) => {
+  res.render("pages/createAccount", { user: undefined });
 });
 
 router.post("/create", async (req, res) => {
   const newUser = req.body;
   const username = newUser.username;
   const password = newUser.password;
+  let errorMessage;
+  if (!(await checkUsername(username))) {
+    errorMessage = "Username already exists";
+    res.render("partials/errorMessage", { errorMessage });
+    return;
+  }
   if (!validUsername(username)) {
-    res.send("invalid");
+    errorMessage = "Invalid Username or password";
+    res.render("partials/errorMessage", { errorMessage });
     return;
   } else if (username && password) {
     try {
@@ -52,15 +62,18 @@ router.post("/create", async (req, res) => {
       res.status(500);
     }
     let message = "Account created!";
+    res.setHeader("HX-Retarget", "main");
     res.render("partials/success", { message });
   } else {
-    res.send("invalid");
+    errorMessage = "Something went wrong sorry...";
+    res.render("partials/errorMessage", { errorMessage });
   }
 });
 
-router.get("/logout", isLoggedIn, (req, res) => {
+router.post("/logout", isLoggedIn, (req, res) => {
   req.session.destroy();
-  res.redirect(301, '/user/login')
+  res.setHeader("HX-Redirect", "/user/login")
+  res.status(200).send('')
 });
 
 export { router };
