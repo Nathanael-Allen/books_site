@@ -1,4 +1,5 @@
 import express from 'express';
+import { validUsername } from "../middleware/validUsername.js"
 import pkg from '../database/usersdb.cjs';
 const { validateUser, addUser } = pkg
 const router = express.Router();
@@ -16,9 +17,15 @@ router.get('/create', (req, res)=>{
 
 router.post('/create', async (req, res)=>{
     const newUser = req.body
-    if(newUser.username && newUser.password){
+    const username = newUser.username;
+    const password = newUser.password
+    if(!validUsername(username)){
+        res.send('invalid')
+        return
+    }
+    else if(username && password){
         try{
-            await addUser(newUser.username, newUser.password);
+            await addUser(username, password);
         }
         catch(err){
             console.log(err)
@@ -28,7 +35,7 @@ router.post('/create', async (req, res)=>{
         res.render('partials/success', {message});
     }
     else{
-        res.render('invalid')
+        res.send('invalid')
     }
 })
 
