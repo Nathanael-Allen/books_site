@@ -3,10 +3,12 @@
 
 ### UI Stuff
 - [x] rename headers
-- [] Book add form
-- [x] Delete and Edit buttons
+- [x] Book add form
+- [x] Delete
+- [x] Edit buttons
 - [x] Add message for empty review page, reading list, page etc...
 - [x] Review card needs username on it
+ 
 
 
 ### Backend Stuff

@@ -1,127 +1,154 @@
 <div class="flex items-center">
-    <% if (user) { %>
-        <p 
-        class="md:hidden px-4 text-sky-500">
-            Hello <%= user.username %>
-        </p>
-    <% } %>
-    <button 
+  <% if (user) { %>
+  <p class="md:hidden px-4 text-sky-500">Hello <%= user.username %></p>
+  <% } %>
+  <button
     class="md:hidden px-4 h-full ml-auto flex justify-center items-center"
     _="on click toggle .hidden on #mobile-nav-list"
-    >
-        <svg width="48px" height="48px" viewBox="0 0 24 24" fill="none">
-            <path d="M20 7L4 7" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M20 12L4 12" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M20 17L4 17" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-    </button>
+  >
+    <svg width="48px" height="48px" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M20 7L4 7"
+        stroke="#ffffff"
+        stroke-width="1.5"
+        stroke-linecap="round"
+      />
+      <path
+        d="M20 12L4 12"
+        stroke="#ffffff"
+        stroke-width="1.5"
+        stroke-linecap="round"
+      />
+      <path
+        d="M20 17L4 17"
+        stroke="#ffffff"
+        stroke-width="1.5"
+        stroke-linecap="round"
+      />
+    </svg>
+  </button>
 </div>
 
 <ul id="mobile-nav-list" class="hidden md:hidden text-center">
-    <li class="border-t">
-        <button
-        _="on click toggle .hidden on #mobile-nav-list"
-        hx-get="/books/reviews" hx-target="#main-div" class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 w-full">all reviews</button>
-    </li>
-    <% if (user) { %>
-        <li class="border-t">
-            <button
-            _="on click toggle .hidden on #mobile-nav-list"
-            hx-get="/books/userreviews" hx-target="#main-div" class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 w-full">my reviews</button>
-        </li>
-        <li class="border-t">
-            <button 
-            _="on click toggle .hidden on #mobile-nav-list"
-            hx-get="/books/readinglist" hx-target="#main-div" class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 w-full">my reading list</button>
-        </li>
-        <li class="border-t">
-            <button 
-            _="on click toggle .hidden on #mobile-nav-list"
-            hx-get="/books/add" hx-target="#main-div" class="text-l px-4 my-3 hover:text-sky-500 w-full">
-                add book
-            </button>
-        </li>
-    <% } %>
-    <% if (!user) { %>
-        <li class="sm:ml-auto border-t">
-            <button
-            _="on click toggle .hidden on #mobile-nav-list"
-            hx-get="login"
-            hx-target="#main-div"
-            class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 w-full">
-                login
-            </button>
-        </li>
-        <li class="border-t">
-            <button
-            _="on click toggle .hidden on #mobile-nav-list"
-            hx-get="login/create" 
-            hx-target="#main-div"
-            class="text-l px-4 my-3 hover:text-sky-500 w-full">
-                create account
-            </button>
-        </li>
-    <% } else { %>
-        <li class="border-t">
-            <button
-            _="on click toggle .hidden on #mobile-nav-list"
-            hx-get="login/logout" 
-            hx-target="body"
-            class="text-l px-4 my-3 hover:text-sky-500 w-full">
-                logout
-            </button>
-        </li>
-    <% } %>
+  <li class="flex items-center border-t">
+    <a
+      _="on click toggle .hidden on #mobile-nav-list"
+      href="/reviews/all"
+      class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 w-full"
+      >all reviews</a
+    >
+  </li>
+  <% if (user) { %>
+  <li class="flex items-center border-t">
+    <a
+      _="on click toggle .hidden on #mobile-nav-list"
+      href="/reviews/myreviews"
+      class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 w-full"
+      >my reviews</a
+    >
+  </li>
+  <li class="flex items-center border-t">
+    <a
+      _="on click toggle .hidden on #mobile-nav-list"
+      href="/readinglist"
+      class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 w-full"
+      >my reading list</a
+    >
+  </li>
+  <li class="flex items-center border-t">
+    <a
+      _="on click toggle .hidden on #mobile-nav-list"
+      href="/books/add"
+      class="text-l px-4 my-3 hover:text-sky-500 w-full"
+    >
+      add book
+    </a>
+  </li>
+  <% } %> <% if (!user) { %>
+  <li class="sm:ml-auto flex items-center border-t">
+    <a
+      _="on click toggle .hidden on #mobile-nav-list"
+      href="/user/login"
+      class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 w-full"
+    >
+      login
+    </a>
+  </li>
+  <li class="flex items-center border-t">
+    <a
+      _="on click toggle .hidden on #mobile-nav-list"
+      href="/user/create"
+      class="text-l px-4 my-3 hover:text-sky-500 w-full"
+    >
+      create account
+    </a>
+  </li>
+  <% } else { %>
+  <li class="flex items-center border-t">
+    <a
+      _="on click toggle .hidden on #mobile-nav-list"
+      href="/user/logout"
+      class="text-l px-4 my-3 hover:text-sky-500 w-full"
+    >
+      logout
+    </a>
+  </li>
+  <% } %>
 </ul>
 
 <ul id="desktop-nav-list" class="max-md:hidden flex flex-auto flex-row">
-    <li class="max-sm:border-t">
-        <button hx-get="/books/reviews" hx-target="#main-div" class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 max-sm:w-full">all reviews</button>
-    </li>
-    <% if (user) { %>
-        <li class="max-sm:border-t">
-            <button hx-get="/books/userreviews" hx-target="#main-div" class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 max-sm:w-full">my reviews</button>
-        </li>
-        <li class="max-sm:border-t">
-            <button hx-get="/books/readinglist" hx-target="#main-div" class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 max-sm:w-full">my reading list</button>
-        </li>
-        <li class="max-sm:border-t">
-            <button hx-get="/books/add" hx-target="#main-div" class="text-l px-4 my-3 hover:text-sky-500 max-sm:w-full">
-                add book
-            </button>
-        </li>
-    <% } %>
-    <% if (!user) { %>
-        <li class="sm:ml-auto max-sm:border-t">
-            <button 
-            hx-get="login"
-            hx-target="#main-div"
-            class="sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 max-sm:w-full">
-                login
-            </button>
-        </li>
-        <li class="max-sm:border-t">
-            <button
-            hx-get="login/create" 
-            hx-target="#main-div"
-            class="px-4 my-3 hover:text-sky-500 max-sm:w-full">
-                create account
-            </button>
-        </li>
-    <% } else { %>
-        <li class="sm:ml-auto max-sm:border-t">
-            <p 
-            class="sm:border-r sm:border-white px-4 my-3 max-sm:w-full text-sky-500">
-                Hello <%= user.username %>
-            </p>
-        </li>
-        <li class="max-sm:border-t">
-            <button
-            hx-get="login/logout" 
-            hx-target="body"
-            class="px-4 my-3 hover:text-sky-500 max-sm:w-full">
-                logout
-            </button>
-        </li>
-    <% } %>
+  <li class="flex items-center max-sm:border-t">
+    <a
+      href="/reviews"
+      class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 max-sm:w-full"
+      >all reviews</a
+    >
+  </li>
+  <% if (user) { %>
+  <li class="flex items-center max-sm:border-t">
+    <a
+      href="/reviews/myreviews"
+      class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 max-sm:w-full"
+      >my reviews</a
+    >
+  </li>
+  <li class="flex items-center max-sm:border-t">
+    <a
+      href="/readinglist"
+      class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 max-sm:w-full"
+      >my reading list</a
+    >
+  </li>
+  <li class="flex items-center max-sm:border-t">
+    <a href="/books/add" class="text-l px-4 my-3 hover:text-sky-500 max-sm:w-full">
+      add book
+    </a>
+  </li>
+  <% } %> <% if (!user) { %>
+  <li class="flex items-center sm:ml-auto max-sm:border-t">
+    <a
+      _="on click toggle .hidden on #mobile-nav-list"
+      href="/user/login"
+      class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 w-full"
+    >
+      login
+    </a>
+  </li>
+  <li class="flex items-center max-sm:border-t">
+    <a href="/user/create" class="px-4 my-3 hover:text-sky-500 max-sm:w-full">
+      create account
+    </a>
+  </li>
+  <% } else { %>
+  <li class="flex items-center sm:ml-auto max-sm:border-t">
+    <p class="sm:border-r sm:border-white px-4 my-3 max-sm:w-full text-sky-500">
+      Hello <%= user.username %>
+    </p>
+  </li>
+  <li class="flex items-center max-sm:border-t">
+    <a href="/user/logout" class="px-4 my-3 hover:text-sky-500 max-sm:w-full">
+      logout
+    </a>
+  </li>
+  <% } %>
 </ul>

@@ -1,33 +1,91 @@
-<form class="sm:w-3/4 m-auto bg-gray-800 p-4 flex flex-col items-center justify-center mt-4 rounded-lg">
-    <h4 class="font-semibold text-xl border-b text-center w-11/12 sm:w-2/3 mb-4">Review</h4>
-    <div class="grid grid-cols-2 w-11/12 sm:w-2/3 mb-6 mt-2">
-        <% if (book.book_id) { %>
-            <input readonly type="hidden" name="book_id" id="book_id" value="<%= book.book_id %>">
-        <% } %>
-        <p class="text-xl font-semibold text-sky-500 col-start-1"><%= book.title %></p>
-        <p class="col-start-1 row-start-2"><%= book.author %></p>
-        <img src="<%= book.imageSrc %>" alt="book cover for <%= book.title %>"
-        class="ml-auto col-start-2 row-span-2 h-24 w-auto overflow-hidden">
-        <input readonly type="hidden" name="imageSrc" id="imageSrc" value="<%= book.imageSrc %>">
-        <input readonly type="hidden" value="<%= book.title %>" class="" name="title", id="title" autocomplete="off">
-        <input readonly type="hidden" value="<%= book.author %>" class="" name="author", id="author" autocomplete="off">
-    </div>
-    <textarea placeholder="Review" class="w-11/12 sm:w-2/3 h-20 sm:h-36 align-top resize-none text-black rounded-lg p-1 mt-2 mb-6 focus:outline-none focus:ring focus:ring-sky-500" type="text" name="review", id="review"></textarea>
-    <div class="flex flex-row sm:w-2/3 w-11/12 my-2">
-        <select placeholder="Rating" name="rating", id="rating" autocomplete="off" 
-        class="text-black rounded-lg p-1 w-24 focus:outline-none focus:ring focus:ring-sky-500">
-            <option value="0.5">0.5</option>
-            <option value="1">1</option>
-            <option value="1.5">1.5</option>
-            <option value="2">2</option>
-            <option value="2.5">2.5</option>
-            <option value="3">3</option>
-            <option value="3.5">3.5</option>
-            <option value="4">4</option>
-            <option value="4.5">4.5</option>
-            <option value="5">5</option>
-        </select>  
-        <p class="w-1/4 ml-2">/5</p>
-    </div>
-    <button hx-post="/books/reviews/add" hx-target="#main-div" class="text-white p-2 flex bg-sky-500 items-center rounded-lg hover:bg-sky-800 max-sm:mt-4">Submit</button>
+<form
+  action="/reviews/add"
+  method="post"
+  class="sm:w-3/4 m-auto bg-gray-800 p-4 flex flex-col items-center justify-center mt-4 rounded-lg"
+>
+  <h4 class="font-semibold text-xl border-b text-center w-11/12 sm:w-2/3 mb-4">
+    Review
+  </h4>
+  <div class="grid grid-cols-2 w-11/12 sm:w-2/3 mb-6 mt-2">
+    <% if (book.book_id) { %>
+    <input
+      readonly
+      type="hidden"
+      name="book_id"
+      id="book_id"
+      value="<%= book.book_id %>"
+    />
+    <% } %>
+    <p class="text-xl font-semibold text-sky-500 col-start-1">
+      <%= book.title %>
+    </p>
+    <p class="col-start-1 row-start-2"><%= book.author %></p>
+    <img
+      src="<%= book.imageSrc %>"
+      alt="book cover for <%= book.title %>"
+      class="ml-auto col-start-2 row-span-2 h-24 w-auto overflow-hidden"
+    />
+    <input
+      readonly
+      type="hidden"
+      name="imageSrc"
+      id="imageSrc"
+      value="<%= book.imageSrc %>"
+    />
+    <input
+      readonly
+      type="hidden"
+      value="<%= book.title %>"
+      class=""
+      name="title"
+      ,
+      id="title"
+      autocomplete="off"
+    />
+    <input
+      readonly
+      type="hidden"
+      value="<%= book.author %>"
+      class=""
+      name="author"
+      ,
+      id="author"
+      autocomplete="off"
+    />
+  </div>
+  <textarea
+    placeholder="Review"
+    class="w-11/12 sm:w-2/3 h-20 sm:h-36 align-top resize-none text-black rounded-lg p-1 mt-2 mb-6 focus:outline-none focus:ring focus:ring-sky-500"
+    type="text"
+    name="review"
+    ,
+    id="review"
+  ></textarea>
+  <div class="flex flex-row sm:w-2/3 w-11/12 my-2">
+    <select
+      placeholder="Rating"
+      name="rating"
+      ,
+      id="rating"
+      autocomplete="off"
+      class="text-black rounded-lg p-1 w-24 focus:outline-none focus:ring focus:ring-sky-500"
+    >
+      <option value="0.5">0.5</option>
+      <option value="1">1</option>
+      <option value="1.5">1.5</option>
+      <option value="2">2</option>
+      <option value="2.5">2.5</option>
+      <option value="3">3</option>
+      <option value="3.5">3.5</option>
+      <option value="4">4</option>
+      <option value="4.5">4.5</option>
+      <option value="5">5</option>
+    </select>
+    <p class="w-1/4 ml-2">/5</p>
+  </div>
+  <input
+    value="submit"
+    type="submit"
+    class="text-white p-2 flex bg-sky-500 items-center rounded-lg hover:bg-sky-800 max-sm:mt-4"
+  />
 </form>
