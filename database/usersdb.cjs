@@ -2,9 +2,11 @@ const sqlite3 = require("sqlite3").verbose();
 const { open } = require("sqlite");
 const bcrypt = require("bcrypt");
 
+const dbPath = process.env.DB_PATH
+
 async function getUserReviews(userID) {
   const db = await open({
-    filename: "private/books.db",
+    filename: dbPath,
     driver: sqlite3.Database,
   });
   let sql = `
@@ -19,7 +21,7 @@ async function getUserReviews(userID) {
 
 async function getUserReadingList(userID) {
   const db = await open({
-    filename: "private/books.db",
+    filename: dbPath,
     driver: sqlite3.Database,
   });
   let sql = `
@@ -36,7 +38,7 @@ async function validateUser(username, pass) {
   const fixedUsername = username.trim().toLowerCase();
   try {
     const db = await open({
-      filename: "private/books.db",
+      filename: dbPath,
       driver: sqlite3.Database,
     });
     let sql = `
@@ -69,7 +71,7 @@ async function addUser(username, pass) {
     if (fixedUsername && pass) {
       const hash = bcrypt.hashSync(pass, 10);
       const db = await open({
-        filename: "private/books.db",
+        filename: dbPath,
         driver: sqlite3.Database,
       });
       let sql = `
@@ -89,7 +91,7 @@ async function addUser(username, pass) {
 async function checkUsername(username) {
   const fixedUsername = username.trim().toLowerCase();
   const db = await open({
-    filename: "private/books.db",
+    filename: dbPath,
     driver: sqlite3.Database,
   });
   let sql = `

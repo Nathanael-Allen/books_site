@@ -36,7 +36,7 @@ router.get("/login", (req, res) => {
   res.render("pages/login", { user: undefined });
 });
 
-router.get("/create", isLoggedIn, (req, res) => {
+router.get("/create", (req, res) => {
   res.render("pages/createAccount", { user: undefined });
 });
 
