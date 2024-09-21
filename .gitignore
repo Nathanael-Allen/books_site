@@ -1,4 +1,4 @@
 node_modules
 .env
-zzztests
-private
+.dockerignore
+Dockerfile
