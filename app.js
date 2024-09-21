@@ -1,7 +1,7 @@
 import { router as reviews } from "./routes/reviews.js";
 import { router as books } from "./routes/books.js";
 import { router as user } from "./routes/user.js";
-import { router as readingList } from "./routes/readingList.js"
+import { router as readingList } from "./routes/readingList.js";
 import { SQLiteStore, session } from "./middleware/session.cjs";
 import express from "express";
 const app = express();
@@ -33,9 +33,9 @@ app.set("view engine", "ejs");
 
 // routes
 app.use("/books", books);
-app.use('/readinglist', readingList)
+app.use("/readinglist", readingList);
 app.use("/reviews", reviews);
-app.use('/user', user)
+app.use("/user", user);
 
 app.get("/", async (req, res) => {
   res.redirect(301, "/reviews");

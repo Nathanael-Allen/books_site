@@ -72,8 +72,8 @@ router.post("/create", async (req, res) => {
 
 router.post("/logout", isLoggedIn, (req, res) => {
   req.session.destroy();
-  res.setHeader("HX-Redirect", "/user/login")
-  res.status(200).send('')
+  res.setHeader("HX-Redirect", "/user/login");
+  res.status(200).send("");
 });
 
 export { router };
