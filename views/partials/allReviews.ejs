@@ -107,7 +107,7 @@
     <% } %> <% if (page.total > page.number) { %>
     <button
       hx-get="/books/reviews/<%= page.number + 1 %>"
-      hx-target="#main-div"
+      hx-target="main"
       class="ml-auto px-8 opacity-50 hover:opacity-100"
     >
       <svg

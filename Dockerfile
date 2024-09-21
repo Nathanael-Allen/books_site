@@ -2,6 +2,8 @@ FROM node:20-alpine
 
 RUN apt install && apt upgrade
 
+VOLUME [ "/data" ]
+
 RUN useradd userguy
 
 WORKDIR /app
