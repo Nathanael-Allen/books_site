@@ -12,5 +12,13 @@
 
 
 ### Backend Stuff
-- [] Input validation on create account form
-- [] auto login when create account
+- [x] Input validation on create account form
+
+
+### Final touches
+- [ ] fix review search bar for mobile (currently closes the keyboard on every get request)
+- [ ] clicking on user profile should bring you to their review page
+- [ ] Change page title  
+- [ ] Add favicon  
+- [ ] Add about page
+- [ ] Fix mobile nav menu routing  

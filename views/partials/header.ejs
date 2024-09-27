@@ -29,11 +29,11 @@
   </button>
 </div>
 
-<ul id="mobile-nav-list" class="hidden md:hidden text-center">
+<ul id="mobile-nav-list" class="hidden md:hidden text-center" hx-boost="true">
   <li class="flex items-center border-t">
     <a
       _="on click toggle .hidden on #mobile-nav-list"
-      href="/reviews/all"
+      href="/reviews"
       class="text-l sm:border-r sm:border-white px-4 my-3 hover:text-sky-500 w-full"
       >all reviews</a
     >
@@ -94,7 +94,7 @@
   <% } %>
 </ul>
 
-<ul id="desktop-nav-list" class="max-md:hidden flex flex-auto flex-row">
+<ul id="desktop-nav-list" class="max-md:hidden flex flex-auto flex-row" hx-boost="true">
   <li class="flex items-center max-sm:border-t">
     <a
       href="/reviews"
