@@ -35,12 +35,10 @@ router.post("/add", async (req, res) => {
 });
 
 // Delete
-router.delete("/readinglist/delete/:bookID", async (req, res) => {
-  const bookID = req.params.bookID;
-  const userID = req.session.user.userID;
+router.delete("/:bookID", async (req, res) => {
+  const { bookID } = req.params;
   await deleteFromReadingList(bookID);
-  const books = await getReadingList(userID);
-  res.status(200).render("partials/readingList", { books });
+  res.redirect(303, "/readinglist");
 });
 
 export { router };

@@ -83,8 +83,9 @@
   <div class="flex w-full mb-6">
     <% if (page.number > 1) { %>
     <button
-      hx-get="/books/reviews/<%= page.number - 1 %>"
-      hx-target="main"
+      hx-push-url="true"
+      hx-get="/reviews?page=<%= page.number - 1 %>"
+      hx-target="body"
       class="mr-auto px-8 opacity-50 hover:opacity-100"
     >
       <svg
@@ -106,8 +107,9 @@
     </button>
     <% } %> <% if (page.total > page.number) { %>
     <button
-      hx-get="/books/reviews/<%= page.number + 1 %>"
-      hx-target="main"
+      hx-push-url="true"
+      hx-get="/reviews?page=<%= page.number + 1 %>"
+      hx-target="body"
       class="ml-auto px-8 opacity-50 hover:opacity-100"
     >
       <svg

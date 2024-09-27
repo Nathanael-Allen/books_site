@@ -23,14 +23,18 @@ router.use(express.urlencoded({ extended: true }));
 
 // All Reviews
 router.get("/", async (req, res) => {
+  let pageNum = Number(req.query.page);
   const user = req.session.user;
-  const books = await getAllReviews();
   const totalPages = await getTotalReviewPages();
-  const page = { number: 1, total: totalPages };
+  if (pageNum > totalPages || !pageNum) {
+    pageNum = 1;
+  }
+  const books = await getNextReviews(pageNum);
+  const page = { number: pageNum, total: totalPages };
   res.render("pages/reviews", { books, user, page });
 });
 
-router.get("/page/:page", isLoggedIn, async (req, res) => {
+router.get("/page/:page", async (req, res) => {
   let { page: pagenum } = req.params;
   pagenum = Number(pagenum);
   const books = await getNextReviews(pagenum);
@@ -52,13 +56,16 @@ router.post("/search", async (req, res) => {
   }
 });
 
-
 // My reviews
 router.get("/myreviews", isLoggedIn, async (req, res) => {
+  let pageNum = Number(req.query.page);
   const user = req.session.user;
-  const books = await getUserReviews(user.userID);
   const totalPages = await getTotalUserReviews(user.userID);
-  const page = { number: 1, total: totalPages };
+  if (pageNum > totalPages || !pageNum) {
+    pageNum = 1;
+  }
+  const books = await getNextUserReviews(pageNum, user.userID);
+  const page = { number: pageNum, total: totalPages };
   res.render("pages/myReviews", { books, page, user });
 });
 
@@ -66,7 +73,6 @@ router.get("/myreviews/page/:page", isLoggedIn, async (req, res) => {
   let { page: pagenum } = req.params;
   pagenum = Number(pagenum);
   const { userID } = req.session.user;
-  const books = await getNextUserReviews(pagenum, userID);
   const totalPages = await getTotalUserReviews(userID);
   const page = { number: pagenum, total: totalPages };
   res.render("partials/userReviews", { books, page });
@@ -100,6 +106,5 @@ router.delete("/delete/:reviewID", async (req, res) => {
   const page = { number: 1, total: totalPages };
   res.status(200).render("partials/userReviews", { books, page });
 });
-
 
 export { router };
