@@ -8,7 +8,7 @@ RUN mkdir /app/bookData
 
 COPY . .
 
-RUN mv -v /app/private/books.db /app/bookData
+# RUN mv -v /app/private/books.db /app/bookData
 
 RUN npm install --omit=dev
 

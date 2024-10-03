@@ -1,20 +1,9 @@
 import express from "express";
 import { isLoggedIn } from "../middleware/isLoggedIn.js";
 import {
-  addReview,
   addToReadingList,
   deleteFromReadingList,
-  deleteReview,
-  getAllReviews,
-  getGoogleBooks,
-  getImageSrc,
-  getNextReviews,
-  getNextUserReviews,
   getReadingList,
-  getTotalReviewPages,
-  getTotalUserReviews,
-  getUserReviews,
-  searchReviews,
 } from "../database/booksdb.cjs";
 const router = express.Router();
 
