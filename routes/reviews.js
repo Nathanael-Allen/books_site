@@ -97,14 +97,11 @@ router.post("/add/form", isLoggedIn, async (req, res) => {
 });
 
 // Delete Review
-router.delete("/delete/:reviewID", async (req, res) => {
+router.delete("/:reviewID", async (req, res) => {
+  console.log('Delete request!')
   const reviewID = req.params.reviewID;
-  const userID = req.session.user.userID;
   await deleteReview(reviewID);
-  const books = await getUserReviews(userID);
-  const totalPages = getTotalUserReviews(userID);
-  const page = { number: 1, total: totalPages };
-  res.status(200).render("partials/userReviews", { books, page });
+  res.redirect(303, '/reviews/myreviews');
 });
 
 export { router };

@@ -15,8 +15,8 @@
       >
         <button
           hx-delete="/reviews/<%= book.review_id %>"
+          hx-target="body"
           hx-confirm="Delete review?"
-          hx-target="main"
           class="absolute top-4 right-2 opacity-35 hover:opacity-100 transition-all"
         >
           <svg width="36px" height="36px" viewBox="0 0 24 24" fill="none">

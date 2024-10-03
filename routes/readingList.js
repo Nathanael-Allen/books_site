@@ -25,6 +25,7 @@ router.post("/add", async (req, res) => {
 
 // Delete
 router.delete("/:bookID", async (req, res) => {
+
   const { bookID } = req.params;
   await deleteFromReadingList(bookID);
   res.redirect(303, "/readinglist");
